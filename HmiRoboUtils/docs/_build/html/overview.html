@@ -1,0 +1,188 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Overview &mdash; Robot Platform 0.1 documentation</title>
+    
+    <link rel="stylesheet" href="_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '0.1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="top" title="Robot Platform 0.1 documentation" href="index.html" />
+    <link rel="next" title="Setting things up" href="settingup.html" />
+    <link rel="prev" title="Welcome to Robot Platform’s documentation!" href="index.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="settingup.html" title="Setting things up"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="index.html" title="Welcome to Robot Platform’s documentation!"
+             accesskey="P">previous</a> |</li>
+        <li><a href="index.html">Robot Platform 0.1 documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="overview">
+<h1>Overview<a class="headerlink" href="#overview" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="communication">
+<h2>Communication<a class="headerlink" href="#communication" title="Permalink to this headline">¶</a></h2>
+<p>For the robot platform two communication protocols are used. For the
+direct robot control, the ROS operating system is used, which is a
+well-known system to control robots, and many &#8220;ROS modules&#8221; for various
+purposes are freely available. This makes ROS the natural choice for
+the robot-side of the system.</p>
+<p>On the other hand, the system is designed to incorporate other components
+such as user interfaces and for instance the Elkerlick system. Therefore
+a second protocol is used. This is the STOMP protocol. An appollo server
+is used as the broker.</p>
+<p>One of the major challanges is to connect the two protocols in a way
+that makes working with and extending the framework as easy as possible.</p>
+</div>
+<div class="section" id="core-components">
+<h2>Core components<a class="headerlink" href="#core-components" title="Permalink to this headline">¶</a></h2>
+<p>The platform consists of four core components, which are distributed over
+multiple computers. Each component can be seen as a process running on
+one of the computers (i.e. the rectangular units in the figure below).</p>
+<p>1) The application that provides a <em>user intarface</em>. This user interface
+can be anything. It can be a widget created with Python and Qt,
+a Java application, blender, etc.  As long as it can communicate
+messages via the STOMP protocol.</p>
+<p>2) The <em>appollo broker</em> provides a mechanism for different processes to
+communicate via the STOMP protocol. The broker is a server process
+that can be run on a separate computer or on the app-PC. It will
+typically not be run on the control computer.</p>
+<p>3) The <em>bridge</em> is a ROS module respobsible for translating STOMP
+messages to ROS messages, and the other way around. The protocol
+to do this is designed to connect the two networks as transparantly as
+possible.</p>
+<p>4) The <em>robot control</em> is a ROS module that controls the robot. Essentially
+it translates ROS messages into actions, and publishes robot status
+with ROS messages.</p>
+<a class="reference internal image-reference" href="_images/Robotplatform_overview1.png"><img alt="_images/Robotplatform_overview1.png" src="_images/Robotplatform_overview1.png" style="width: 500px;" /></a>
+</div>
+<div class="section" id="scalability">
+<h2>Scalability<a class="headerlink" href="#scalability" title="Permalink to this headline">¶</a></h2>
+<p>The four components described above are the minimal set that make up
+the robot framework. The framework can be made very &#8220;compact&#8221; and easy
+to setup by running the control computer on a virtual machine (VM),
+and running the Apollo broker and user UI app on the host PC.</p>
+<p>The proposed platform is designed to scale well, where the apollo
+network is the connecting factor. Multiple robots can be attached to
+the platform. They can be shared on one control computer, or on separate
+conrol computers. Multiple user UI apps can also be used simultaneously.
+An example is shown in the image below.</p>
+<a class="reference internal image-reference" href="_images/Robotplatform_overview2.png"><img alt="_images/Robotplatform_overview2.png" src="_images/Robotplatform_overview2.png" style="width: 500px;" /></a>
+</div>
+<div class="section" id="code">
+<h2>Code<a class="headerlink" href="#code" title="Permalink to this headline">¶</a></h2>
+<p>For the code of the robot platform we use one code repository for the
+different components of the system. This repository is a mercurial DVCS
+hosted at bitbucket.org.</p>
+<p>The root directory is divided in several subdirectories. The different
+ROS modules are placed in <tt class="docutils literal"><span class="pre">rosmodules</span></tt>. The front-end applications
+are in the <tt class="docutils literal"><span class="pre">apps</span></tt> directory. The <tt class="docutils literal"><span class="pre">robotutils</span></tt> directory is a Python
+package that provides common functionality for the differen components
+of the platform. It needs to be installed using <tt class="docutils literal"><span class="pre">python</span> <span class="pre">setup.py</span> <span class="pre">install</span></tt>
+before it can be used.</p>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Overview</a><ul>
+<li><a class="reference internal" href="#communication">Communication</a></li>
+<li><a class="reference internal" href="#core-components">Core components</a></li>
+<li><a class="reference internal" href="#scalability">Scalability</a></li>
+<li><a class="reference internal" href="#code">Code</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="index.html"
+                        title="previous chapter">Welcome to Robot Platform&#8217;s documentation!</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="settingup.html"
+                        title="next chapter">Setting things up</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="_sources/overview.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="settingup.html" title="Setting things up"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="index.html" title="Welcome to Robot Platform’s documentation!"
+             >previous</a> |</li>
+        <li><a href="index.html">Robot Platform 0.1 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2013, Science Applied v.o.f..
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.2.
+    </div>
+  </body>
+</html>

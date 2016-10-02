@@ -1,0 +1,163 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Applications &mdash; Robot Platform 0.1 documentation</title>
+    
+    <link rel="stylesheet" href="_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '0.1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="top" title="Robot Platform 0.1 documentation" href="index.html" />
+    <link rel="next" title="Robotutils package" href="robotutils.html" />
+    <link rel="prev" title="Rosmodules" href="rosmodules.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="robotutils.html" title="Robotutils package"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="rosmodules.html" title="Rosmodules"
+             accesskey="P">previous</a> |</li>
+        <li><a href="index.html">Robot Platform 0.1 documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="applications">
+<h1>Applications<a class="headerlink" href="#applications" title="Permalink to this headline">¶</a></h1>
+<p>The <tt class="docutils literal"><span class="pre">apps</span></tt> directory contains the front-end applications for the robot
+platform. These can be user interfaces, but can for instance also be
+programs that control a robot in other ways.</p>
+<p>Below is a list of applciations. Most do not exist yet, but give an
+idea about the possibilities of the platform.</p>
+<div class="section" id="turtle-app">
+<h2>Turtle app<a class="headerlink" href="#turtle-app" title="Permalink to this headline">¶</a></h2>
+<p>The turtle application is a simple application to control the turtlesim
+robot. This is a standard simulation robot (software only). It is mainly
+intended for demonstartion and test purposes.</p>
+<p>The application allows the user to control the speed and change if direction
+of a virtual turtle. The turtle robot sends back its coordinates, allowing
+the application to draw the turtle in the correct place.</p>
+<p>There is also a turtlesim application, which acts like the turle robot,
+but communicates directly via the appollo network. This can be used for
+testing purposes when a ROS backend is not available.</p>
+</div>
+<div class="section" id="generic-control-app">
+<h2>Generic control app<a class="headerlink" href="#generic-control-app" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="nao-app">
+<h2>NAO app<a class="headerlink" href="#nao-app" title="Permalink to this headline">¶</a></h2>
+<p>For controlling the NAO. (Not implemented, use the generic control app instead.)</p>
+</div>
+<div class="section" id="motorfader-app">
+<h2>Motorfader app<a class="headerlink" href="#motorfader-app" title="Permalink to this headline">¶</a></h2>
+<p>App that interfaces the motor fader with the apollo network. We provide
+an example to control the turtlesim module, which can be modified to control
+other ROS modules as well.</p>
+</div>
+<div class="section" id="blender-app">
+<h2>Blender app<a class="headerlink" href="#blender-app" title="Permalink to this headline">¶</a></h2>
+<p>A Python module to allow blender to be used as a front-end for robot control.
+(not implemented)</p>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Applications</a><ul>
+<li><a class="reference internal" href="#turtle-app">Turtle app</a></li>
+<li><a class="reference internal" href="#generic-control-app">Generic control app</a></li>
+<li><a class="reference internal" href="#nao-app">NAO app</a></li>
+<li><a class="reference internal" href="#motorfader-app">Motorfader app</a></li>
+<li><a class="reference internal" href="#blender-app">Blender app</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="rosmodules.html"
+                        title="previous chapter">Rosmodules</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="robotutils.html"
+                        title="next chapter">Robotutils package</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="_sources/applications.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="robotutils.html" title="Robotutils package"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="rosmodules.html" title="Rosmodules"
+             >previous</a> |</li>
+        <li><a href="index.html">Robot Platform 0.1 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2013, Science Applied v.o.f..
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.2.
+    </div>
+  </body>
+</html>

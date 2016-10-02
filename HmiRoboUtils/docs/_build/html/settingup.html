@@ -1,0 +1,283 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Setting things up &mdash; Robot Platform 0.1 documentation</title>
+    
+    <link rel="stylesheet" href="_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '0.1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="top" title="Robot Platform 0.1 documentation" href="index.html" />
+    <link rel="next" title="Protocol" href="protocol.html" />
+    <link rel="prev" title="Overview" href="overview.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="protocol.html" title="Protocol"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="overview.html" title="Overview"
+             accesskey="P">previous</a> |</li>
+        <li><a href="index.html">Robot Platform 0.1 documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="setting-things-up">
+<h1>Setting things up<a class="headerlink" href="#setting-things-up" title="Permalink to this headline">¶</a></h1>
+<p>We use one code repository for the different components of the system.
+This repository is a mercurial DVCS hosted at bitbucket.org.</p>
+<p>The ROS modules are implemented in Python, as well as most of the
+user interface applications. We use the &#8220;stomp.py&#8221; package for
+communication with the apollo broker.</p>
+<div class="section" id="the-apollo-broker">
+<h2>The Apollo broker<a class="headerlink" href="#the-apollo-broker" title="Permalink to this headline">¶</a></h2>
+<p>You can run the apollo broker on any PC, as long as its on the same
+network. In principle the apollo broker is not run at the control
+computer that also runs ROS. In case of doubt, it&#8217;s probably easiest
+to run the broker at the same computer that runs the user interface
+application.</p>
+<dl class="docutils">
+<dt>To install Apollo:</dt>
+<dd><ul class="first last simple">
+<li>Download the binary (google for &#8220;download apollo&#8221;).</li>
+<li>Execute <tt class="docutils literal"><span class="pre">bin/apollo</span></tt></li>
+<li>Type <tt class="docutils literal"><span class="pre">create</span> <span class="pre">foo</span></tt>, where &#8220;foo&#8221; is the name of your apollo server.</li>
+</ul>
+</dd>
+<dt>To use Apollo:</dt>
+<dd><ul class="first last simple">
+<li>Start broker: <tt class="docutils literal"><span class="pre">foo/bin/appollo-broker</span></tt></li>
+<li>Type <tt class="docutils literal"><span class="pre">run</span></tt></li>
+<li>Your apollo server is now on!</li>
+</ul>
+</dd>
+</dl>
+</div>
+<div class="section" id="ros">
+<h2>ROS<a class="headerlink" href="#ros" title="Permalink to this headline">¶</a></h2>
+<p>Note that the ROS operating system can also be run as a virtual machine.</p>
+<dl class="docutils">
+<dt>To create the ROS OS:</dt>
+<dd><ul class="first last simple">
+<li>Install Ubuntu</li>
+<li>Follow instructions: <a class="reference external" href="http://www.ros.org/wiki/fuerte/Installation/Ubuntu">http://www.ros.org/wiki/fuerte/Installation/Ubuntu</a></li>
+</ul>
+</dd>
+<dt>To create a ROS module:</dt>
+<dd><ul class="first last simple">
+<li>Create a workspace with <tt class="docutils literal"><span class="pre">rosws</span> <span class="pre">init</span> <span class="pre">~/ros_workspace</span> <span class="pre">/opt/ros/fuerte</span></tt></li>
+<li>Create new package anywhere in this workspace <tt class="docutils literal"><span class="pre">roscreate-pkg</span> <span class="pre">package_name</span></tt></li>
+</ul>
+</dd>
+</dl>
+<p>We use a single code repository, which we checkout inside our workspace.
+The packages are simply directories in our code repository.</p>
+<dl class="docutils">
+<dt>To use ROS:</dt>
+<dd><ul class="first last simple">
+<li>Start broker in one shell: <tt class="docutils literal"><span class="pre">roscore</span></tt></li>
+<li>In another shell first set the ROS PATH: <tt class="docutils literal"><span class="pre">.</span> <span class="pre">ros_workspace/setup.bash</span></tt></li>
+<li>Now run whatever module you want with <tt class="docutils literal"><span class="pre">rosrun</span> <span class="pre">app</span> <span class="pre">script</span></tt></li>
+</ul>
+</dd>
+</dl>
+</div>
+<div class="section" id="installing-the-nao-modules-on-ros">
+<h2>Installing the NAO modules on ROS<a class="headerlink" href="#installing-the-nao-modules-on-ros" title="Permalink to this headline">¶</a></h2>
+<p>See also the instructions here: <a class="reference external" href="http://www.ros.org/wiki/nao/Tutorials/Getting-Started">http://www.ros.org/wiki/nao/Tutorials/Getting-Started</a></p>
+<p>First we will need the rosdep package, which is not installed by
+default::</p>
+<div class="highlight-python"><div class="highlight"><pre>sudo apt-get install python-rosdep
+sudo rosdep init
+rosdep update  (do not use sudo here!)
+</pre></div>
+</div>
+<p>Then install the prerequisites::</p>
+<div class="highlight-python"><div class="highlight"><pre>sudo apt-get install ros-fuerte-joystick-drivers ros-fuerte-navigation ros-fuerte-rospack ros-fuerte-visualization
+rosdep install joy
+rosdep install navigation
+</pre></div>
+</div>
+<p>Install the Nao packages::</p>
+<div class="highlight-python"><div class="highlight"><pre>rosdep install humanoid_msgs nao_robot nao_common
+rosmake humanoid_msgs nao_robot nao_common
+</pre></div>
+</div>
+<dl class="docutils">
+<dt>Now install Naoqi:</dt>
+<dd><ul class="first last simple">
+<li>Follow from <cite>Installing NAOqi</cite>: <a class="reference external" href="http://www.ros.org/wiki/nao/Tutorials/Getting-Started">http://www.ros.org/wiki/nao/Tutorials/Getting-Started</a></li>
+<li>(we had one occasion for which we needed to manually copy Python&#8217;s include dir.)</li>
+</ul>
+</dd>
+</dl>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<dl class="last docutils">
+<dt>The robotplatform source code contains:</dt>
+<dd><ul class="first last simple">
+<li>The Nao ROS module</li>
+<li>A bash script to start the naoqi broker (official Nao)</li>
+<li>A bash script to start the nao_driver (the ROS module)</li>
+</ul>
+</dd>
+</dl>
+</div>
+<dl class="docutils">
+<dt>To use Nao:</dt>
+<dd><ul class="first last simple">
+<li>In a new shell run: <tt class="docutils literal"><span class="pre">robotframework/rosmodules/nao/naoqi_launch.sh</span></tt></li>
+<li>In a new shell run: <tt class="docutils literal"><span class="pre">robotframework/rosmodules/nao/nao_launch.sh</span></tt></li>
+</ul>
+</dd>
+<dt>To turn visualization on:</dt>
+<dd><ul class="first last simple">
+<li>The first time, follow instructions <cite>Viewing the simulated Nao robot in rviz</cite> in the above link</li>
+<li>In a new shell run: <tt class="docutils literal"><span class="pre">roslaunch</span> <span class="pre">nao_description</span> <span class="pre">nao_state_publisher.launch</span></tt></li>
+<li>In a new shell run: <tt class="docutils literal"><span class="pre">rosrun</span> <span class="pre">rviz</span> <span class="pre">rviz</span></tt></li>
+</ul>
+</dd>
+</dl>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">If you are using the Nao with visualization there are thus at least
+six processes that run simultaneously on the ROS machine:
+<cite>ros broker</cite>, <cite>naoqi broker</cite>,
+<cite>bridge module</cite>, <cite>nao module</cite>, <cite>nao state publisher</cite>, <cite>rviz</cite>.</p>
+</div>
+</div>
+<div class="section" id="motor-fader-interface">
+<h2>Motor fader interface<a class="headerlink" href="#motor-fader-interface" title="Permalink to this headline">¶</a></h2>
+<p>For the motor fader, we&#8217;ve made use of the Behringer BCF2000. For the low
+level MIDI communication, the Python package <cite>rtmidi</cite> is required. Other
+packages may be suitable as well, but this was one of the few that worked,
+is relatively easy to install, and is actively developed.</p>
+<dl class="docutils">
+<dt>To install rtmidi on Windows:</dt>
+<dd><ul class="first last simple">
+<li>A binary installer is provided that includes the rtmidi library</li>
+</ul>
+</dd>
+<dt>To install rtmidi on Linux:</dt>
+<dd><ul class="first last simple">
+<li>Install libjack first (<tt class="docutils literal"><span class="pre">sudo</span> <span class="pre">apt-get</span> <span class="pre">install</span> <span class="pre">libjack</span></tt>)</li>
+<li>Download the source from Pypi (search for &#8216;python-rtmidi&#8217;)</li>
+<li>run <tt class="docutils literal"><span class="pre">sudo</span> <span class="pre">python</span> <span class="pre">setup.py</span> <span class="pre">install</span></tt> (or equivalent)</li>
+</ul>
+</dd>
+<dt>To install rtmidi on Mac:</dt>
+<dd><ul class="first last simple">
+<li>Same as for Linux, except libjack is not required.</li>
+</ul>
+</dd>
+</dl>
+<p>To use the motor fader <tt class="docutils literal"><span class="pre">from</span> <span class="pre">robotuils</span> <span class="pre">import</span> <span class="pre">bcfinterface</span></tt>. Which
+provides a simple API to control this particular motor fader via rtmidi.</p>
+</div>
+<div class="section" id="user-interface-apps">
+<h2>User interface apps<a class="headerlink" href="#user-interface-apps" title="Permalink to this headline">¶</a></h2>
+<p>You need a valid Python system with stomp.py installed. We recommend
+Python 3.x with PySide or PyQt4.</p>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Setting things up</a><ul>
+<li><a class="reference internal" href="#the-apollo-broker">The Apollo broker</a></li>
+<li><a class="reference internal" href="#ros">ROS</a></li>
+<li><a class="reference internal" href="#installing-the-nao-modules-on-ros">Installing the NAO modules on ROS</a></li>
+<li><a class="reference internal" href="#motor-fader-interface">Motor fader interface</a></li>
+<li><a class="reference internal" href="#user-interface-apps">User interface apps</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="overview.html"
+                        title="previous chapter">Overview</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="protocol.html"
+                        title="next chapter">Protocol</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="_sources/settingup.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="protocol.html" title="Protocol"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="overview.html" title="Overview"
+             >previous</a> |</li>
+        <li><a href="index.html">Robot Platform 0.1 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2013, Science Applied v.o.f..
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.2.
+    </div>
+  </body>
+</html>

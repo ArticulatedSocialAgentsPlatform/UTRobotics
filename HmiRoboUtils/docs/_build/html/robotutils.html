@@ -1,0 +1,362 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Robotutils package &mdash; Robot Platform 0.1 documentation</title>
+    
+    <link rel="stylesheet" href="_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '0.1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="top" title="Robot Platform 0.1 documentation" href="index.html" />
+    <link rel="prev" title="Applications" href="applications.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="applications.html" title="Applications"
+             accesskey="P">previous</a> |</li>
+        <li><a href="index.html">Robot Platform 0.1 documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="module-robotutils">
+<span id="robotutils-package"></span><h1>Robotutils package<a class="headerlink" href="#module-robotutils" title="Permalink to this headline">¶</a></h1>
+<p>Utility package for functionality that is common to different parts
+of the robot platform.</p>
+<p>The package must be installed before it can be used::</p>
+<div class="highlight-python"><div class="highlight"><pre>sudo setup.py install
+</pre></div>
+</div>
+<dl class="function">
+<dt id="robotutils.xml2dict">
+<tt class="descclassname">robotutils.</tt><tt class="descname">xml2dict</tt><big>(</big><em>xml</em><big>)</big><a class="headerlink" href="#robotutils.xml2dict" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create a Python dict from xml. The input can be a string or an
+ElementTree.Element object.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="robotutils.dict2xml">
+<tt class="descclassname">robotutils.</tt><tt class="descname">dict2xml</tt><big>(</big><em>d</em>, <em>tagname='data'</em>, <em>pretty=False</em>, <em>as_string=True</em><big>)</big><a class="headerlink" href="#robotutils.dict2xml" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create an xml string from a Python dict. Will add indentation if
+pretty is True. Will return a Python ElementTree object if as_string
+is False.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="robotutils.set_config">
+<tt class="descclassname">robotutils.</tt><tt class="descname">set_config</tt><big>(</big><em>componentname</em>, <em>**values</em><big>)</big><a class="headerlink" href="#robotutils.set_config" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set configuration values for this computer.</p>
+<p>Where componentname is for instance &#8216;bridge&#8217;, &#8216;apollo&#8217;. Updates
+the given values in the configuration file. Other values in the
+config file are left as is. Returns a dict with the full
+configuration.</p>
+<p>Supported datatypes are int, float, str, and tuple. Configuration
+values can be deleted by setting them to None.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="robotutils.get_config">
+<tt class="descclassname">robotutils.</tt><tt class="descname">get_config</tt><big>(</big><em>componentname</em>, <em>**default</em><big>)</big><a class="headerlink" href="#robotutils.get_config" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get configuration values for this computer.</p>
+<p>Componentname is for instance &#8216;bridge&#8217; or &#8216;apollo&#8217;. Returns
+a dict equal to the given kwargs, but updated with the values read
+from the configuration file.</p>
+</dd></dl>
+
+<dl class="class">
+<dt id="robotutils.BCFInterface">
+<em class="property">class </em><tt class="descclassname">robotutils.</tt><tt class="descname">BCFInterface</tt><big>(</big><em>in_port=0</em>, <em>out_port=0</em><big>)</big><a class="headerlink" href="#robotutils.BCFInterface" title="Permalink to this definition">¶</a></dt>
+<dd><p>BCFInterface(in_port=0, out_port=0)</p>
+<p>Provides an interface to the BCF2000 motor fader, by communicating
+MIDI messages with it. Requires the rtmidi package.</p>
+<dl class="docutils">
+<dt>in_port <span class="classifier-delimiter">:</span> <span class="classifier">int</span></dt>
+<dd>Input port on the MIDI interface.</dd>
+<dt>out_port <span class="classifier-delimiter">:</span> <span class="classifier">int</span></dt>
+<dd>Output port on the MIDI interface.</dd>
+</dl>
+<dl class="attribute">
+<dt id="robotutils.BCFInterface.button_callback">
+<tt class="descname">button_callback</tt><a class="headerlink" href="#robotutils.BCFInterface.button_callback" title="Permalink to this definition">¶</a></dt>
+<dd><p>Callback invoked when one of the pushbuttons is pressed.</p>
+<p>This callback is invoked when one of the 16 pushbuttons on the
+top panel of the BCF2000 is pressed. The callback should have
+the following signature:</p>
+<blockquote>
+<div>callable(id, value)</div></blockquote>
+<p>where <cite>id</cite> will be in the range [1, 16] (counting from top-left
+to bottom-right), and <cite>value</cite> will be True (when the button is
+set), or False (when the button is unset).</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="robotutils.BCFInterface.encbutton_callback">
+<tt class="descname">encbutton_callback</tt><a class="headerlink" href="#robotutils.BCFInterface.encbutton_callback" title="Permalink to this definition">¶</a></dt>
+<dd><p>Callback invoked when one of the rotary encoders is pushed.</p>
+<p>This callback is invoked when one of the 8 rotary encoders on
+the top panel of the BCF2000 is pushed. The callback should have
+the following signature:</p>
+<blockquote>
+<div>callable(id, value)</div></blockquote>
+<p>where <cite>id</cite> will be in the range [1, 8] (counting from top-left
+to bottom-right), and <cite>value</cite> will be True (when the button is
+set), or False (when the button is unset).</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="robotutils.BCFInterface.encoder_callback">
+<tt class="descname">encoder_callback</tt><a class="headerlink" href="#robotutils.BCFInterface.encoder_callback" title="Permalink to this definition">¶</a></dt>
+<dd><p>Callback invoked when one of the rotary encoders is
+manipulated.</p>
+<p>This callback is invoked when one of the 8 rotary encoders on
+the top panel of the BCF2000 is manipulated. The callback
+should have the following signature:</p>
+<blockquote>
+<div>callable(id, value)</div></blockquote>
+<p>where <cite>id</cite> will be in the range [1, 8] (counting from left to
+right), and <cite>value</cite> will be in the range of [0, 127].</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="robotutils.BCFInterface.fader_callback">
+<tt class="descname">fader_callback</tt><a class="headerlink" href="#robotutils.BCFInterface.fader_callback" title="Permalink to this definition">¶</a></dt>
+<dd><p>Callback invoked when one of the motorized faders is
+manipulated.</p>
+<p>This callback is invoked when one of the 8 motorized faders on
+the bottom panel of the BCF2000 is manipulated. The callback
+should have the following signature:</p>
+<blockquote>
+<div>callable(id, value)</div></blockquote>
+<p>where <cite>id</cite> will be in the range [1, 8] (counting from left to
+right), and <cite>value</cite> will be in the range of [0, 127].</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="robotutils.BCFInterface.get_button">
+<tt class="descname">get_button</tt><big>(</big><em>id</em><big>)</big><a class="headerlink" href="#robotutils.BCFInterface.get_button" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the current value for given button (True if set, False
+if unset). Returns None for an invalid id.</p>
+<dl class="docutils">
+<dt>id <span class="classifier-delimiter">:</span> <span class="classifier">int</span></dt>
+<dd>Button-ID within the set [1, BCF_BUTTON_COUNT]</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="robotutils.BCFInterface.get_encbutton">
+<tt class="descname">get_encbutton</tt><big>(</big><em>id</em><big>)</big><a class="headerlink" href="#robotutils.BCFInterface.get_encbutton" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the current value for given encoder button (True if
+set, False if unset). Returns None for an invalid id.</p>
+<dl class="docutils">
+<dt>id <span class="classifier-delimiter">:</span> <span class="classifier">int</span></dt>
+<dd>Encoder-ID within the set [1, BCF_ENCODER_COUNT]</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="robotutils.BCFInterface.get_encoder">
+<tt class="descname">get_encoder</tt><big>(</big><em>id</em><big>)</big><a class="headerlink" href="#robotutils.BCFInterface.get_encoder" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the current value for given encoder. Returns None for
+an invalid id.</p>
+<dl class="docutils">
+<dt>id <span class="classifier-delimiter">:</span> <span class="classifier">int</span></dt>
+<dd>Encoder-ID within the set [1, BCF_ENCODER_COUNT]</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="robotutils.BCFInterface.get_fader">
+<tt class="descname">get_fader</tt><big>(</big><em>id</em><big>)</big><a class="headerlink" href="#robotutils.BCFInterface.get_fader" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the current value for given fader. Returns None for an
+invalid id.</p>
+<dl class="docutils">
+<dt>id <span class="classifier-delimiter">:</span> <span class="classifier">int</span></dt>
+<dd>Fader-ID within the set [1, BCF_FADER_COUNT]</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="robotutils.BCFInterface.reset_all">
+<tt class="descname">reset_all</tt><big>(</big><big>)</big><a class="headerlink" href="#robotutils.BCFInterface.reset_all" title="Permalink to this definition">¶</a></dt>
+<dd><p>Reset all controls.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="robotutils.BCFInterface.reset_buttons">
+<tt class="descname">reset_buttons</tt><big>(</big><big>)</big><a class="headerlink" href="#robotutils.BCFInterface.reset_buttons" title="Permalink to this definition">¶</a></dt>
+<dd><p>Turn off all buttons.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="robotutils.BCFInterface.reset_encbuttons">
+<tt class="descname">reset_encbuttons</tt><big>(</big><big>)</big><a class="headerlink" href="#robotutils.BCFInterface.reset_encbuttons" title="Permalink to this definition">¶</a></dt>
+<dd><p>Turn off all encoder buttons.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="robotutils.BCFInterface.reset_encoders">
+<tt class="descname">reset_encoders</tt><big>(</big><big>)</big><a class="headerlink" href="#robotutils.BCFInterface.reset_encoders" title="Permalink to this definition">¶</a></dt>
+<dd><p>Reset all faders to zero.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="robotutils.BCFInterface.reset_faders">
+<tt class="descname">reset_faders</tt><big>(</big><big>)</big><a class="headerlink" href="#robotutils.BCFInterface.reset_faders" title="Permalink to this definition">¶</a></dt>
+<dd><p>Reset all faders to zero.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="robotutils.BCFInterface.set_button">
+<tt class="descname">set_button</tt><big>(</big><em>id</em>, <em>value=True</em><big>)</big><a class="headerlink" href="#robotutils.BCFInterface.set_button" title="Permalink to this definition">¶</a></dt>
+<dd><p>Turn on the button with given ID. If value is False, the
+call is equivalent to unset_button(id)</p>
+<dl class="docutils">
+<dt>id <span class="classifier-delimiter">:</span> <span class="classifier">int</span></dt>
+<dd>Button-ID within the set [1, BCF_BUTTON_COUNT]</dd>
+<dt>value <span class="classifier-delimiter">:</span> <span class="classifier">bool</span></dt>
+<dd>True to set button, False to unset</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="robotutils.BCFInterface.set_encbutton">
+<tt class="descname">set_encbutton</tt><big>(</big><em>id</em>, <em>value=True</em><big>)</big><a class="headerlink" href="#robotutils.BCFInterface.set_encbutton" title="Permalink to this definition">¶</a></dt>
+<dd><p>Turn on the encoder button with given ID. If value is False,
+the call is equivalent to unset_encbutton(id)</p>
+<dl class="docutils">
+<dt>id <span class="classifier-delimiter">:</span> <span class="classifier">int</span></dt>
+<dd>Encoder-ID within the set [1, BCF_ENCODER_COUNT]</dd>
+<dt>value <span class="classifier-delimiter">:</span> <span class="classifier">bool</span></dt>
+<dd>True to set button, False to unset</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="robotutils.BCFInterface.set_encoder">
+<tt class="descname">set_encoder</tt><big>(</big><em>id</em>, <em>value</em><big>)</big><a class="headerlink" href="#robotutils.BCFInterface.set_encoder" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set the value for given encoder.</p>
+<dl class="docutils">
+<dt>id <span class="classifier-delimiter">:</span> <span class="classifier">int</span></dt>
+<dd>Fader-ID within the set [1, BCF_ENCODER_COUNT]</dd>
+<dt>value <span class="classifier-delimiter">:</span> <span class="classifier">int</span></dt>
+<dd>Value within range [0, 127]</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="robotutils.BCFInterface.set_fader">
+<tt class="descname">set_fader</tt><big>(</big><em>id</em>, <em>value</em><big>)</big><a class="headerlink" href="#robotutils.BCFInterface.set_fader" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set the value for given fader.</p>
+<dl class="docutils">
+<dt>id <span class="classifier-delimiter">:</span> <span class="classifier">int</span></dt>
+<dd>Fader-ID within the set [1, BCF_FADER_COUNT]</dd>
+<dt>value <span class="classifier-delimiter">:</span> <span class="classifier">int</span></dt>
+<dd>Value within range [0, 127]</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="robotutils.BCFInterface.unset_button">
+<tt class="descname">unset_button</tt><big>(</big><em>id</em><big>)</big><a class="headerlink" href="#robotutils.BCFInterface.unset_button" title="Permalink to this definition">¶</a></dt>
+<dd><p>Turn off the button with given ID.</p>
+<dl class="docutils">
+<dt>id <span class="classifier-delimiter">:</span> <span class="classifier">int</span></dt>
+<dd>Button-ID within the set [1, BCF_BUTTON_COUNT]</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="robotutils.BCFInterface.unset_encbutton">
+<tt class="descname">unset_encbutton</tt><big>(</big><em>id</em><big>)</big><a class="headerlink" href="#robotutils.BCFInterface.unset_encbutton" title="Permalink to this definition">¶</a></dt>
+<dd><p>Turn off the encoder button with given ID.</p>
+<dl class="docutils">
+<dt>id <span class="classifier-delimiter">:</span> <span class="classifier">int</span></dt>
+<dd>Encoder-ID within the set [1, BCF_ENCODER_COUNT]</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="applications.html"
+                        title="previous chapter">Applications</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="_sources/robotutils.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="applications.html" title="Applications"
+             >previous</a> |</li>
+        <li><a href="index.html">Robot Platform 0.1 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2013, Science Applied v.o.f..
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.2.
+    </div>
+  </body>
+</html>
