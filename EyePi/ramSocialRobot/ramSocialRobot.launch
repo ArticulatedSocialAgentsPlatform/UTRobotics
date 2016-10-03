@@ -1,0 +1,36 @@
+<launch>
+<!-- Basis nodes -->
+    <node pkg="ram_animator" type="ram_animator_node" name="ram_animator_node"/>
+    <node pkg="ram_midi_driver" type="ram_midi_driver_input_node.py" name="ram_midi_driver_input_node" args="3" respawn="true"/>
+    <node pkg="ram_midi_driver" type="ram_midi_driver_output_node.py" name="ram_midi_driver_output_node" args="2" respawn="true"/>
+    <node pkg="ram_midi_to_animation" type="ram_midi_to_animation_node" name="ram_midi_to_animation_node"/>
+    <node pkg="ram_pose_to_dynamixel" type="ram_pose_to_dynamixel_node" name="ram_pose_to_dynamixel_node"/>
+    <node pkg="rosserial_python" type="serial_node.py" name="arduinoSerialConnector" args="_port:=/dev/ttyACM0"/>
+
+<!-- Launch files for dynamixel motor control -->
+    <include file="$(find ram_dynamixel_config)/manager.launch" />
+    <include file="$(find ram_dynamixel_config)/controller.launch" />
+
+<!-- Nodes for motion detection and hmmm -->
+    <node pkg="ram_motion_detection" type="ram_motion_detection_node" name="ram_motion_detection_node"/>
+    <node pkg="ram_hmmm" type="ram_hmmm_node" name="ram_hmmm_node"/>
+
+<!-- Launch file to start the simulator -->
+<!-- -*-
+    <include file="$(find joints_sim)/display.launch" />
+-*- -->
+
+<!-- Asap realizer bridge -->
+    <node pkg="asap_ros_bridge" type="relay.py" name="apollobridge"/>
+
+<!-- RQT to show topics/nodes -->
+<!-- -*-
+    <node pkg="rqt_graph" type="rqt_graph" name="RqtGraph" />
+-*- -->
+
+<!-- Can be used to reconfigure nodes (not used currently) -->
+<!-- -*-
+    <node pkg="rqt_reconfigure" type="rqt_reconfigure" name="RqtReconfigure" />
+-*- -->
+
+</launch>

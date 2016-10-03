@@ -1,0 +1,8 @@
+<launch>
+        <param name="robot_description" command="cat $(find joints_sim)/my_robot.urdf" />
+        <node name="robot_state_publisher" pkg="robot_state_publisher" type="state_publisher" />
+        <node name="state_publisher" pkg="joints_sim" type="state_publisher" />
+        <node pkg="ram_face_sim" type="ram_face_sim_node" name="ram_face_sim_node" />
+        <node pkg="rviz" type="rviz" name="rviz" args="-d $(find joints_sim)/RvizBodyConfig.rviz" />
+        <node pkg="rviz" type="rviz" name="rvizFace" args="-d $(find joints_sim)/RvizConfigFace.rviz" />
+</launch>

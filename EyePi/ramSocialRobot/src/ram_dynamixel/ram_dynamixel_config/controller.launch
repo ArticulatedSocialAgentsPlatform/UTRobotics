@@ -1,0 +1,18 @@
+<launch>
+    <group ns="ram/dynamixel">
+
+        <rosparam file="$(find ram_dynamixel_config)/config.yml" command="load"/>
+
+        <node name="joints_controller_spawner"
+            pkg="dynamixel_controllers"
+            type="controller_spawner.py"
+            args="
+              --manager=dxl_manager
+              --port robot
+              zoom_joint
+              nod_joint
+              pitch_joint"
+            output="screen"/>
+
+    </group>
+</launch>

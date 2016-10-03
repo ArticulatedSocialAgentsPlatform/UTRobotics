@@ -1,0 +1,7 @@
+<launch>
+ 
+<include file="$(find dynamixel)/dynamixel_manager.launch" />
+<include file="$(find dynamixel)/start_robot_controller.launch" />
+<include file="$(find joints_sim)/display.launch" />
+
+</launch>

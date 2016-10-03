@@ -1,0 +1,39 @@
+pitch_joint:
+    controller:
+        package: dynamixel_controllers
+        module: joint_position_controller
+        type: JointPositionController
+    joint_name: pitch
+    joint_speed: 5.5
+    motor:
+        id: 11
+        init: 2480
+        min: 1400
+        max: 3500
+
+zoom_joint:
+    controller:
+        package: dynamixel_controllers
+        module: joint_position_controller
+        type: JointPositionController
+    joint_name: zoom
+    joint_speed: 5.5
+    motor:
+        id: 12
+        init: 2340
+        min: 1700
+        max: 2650
+
+nod_joint:
+    controller:
+        package: dynamixel_controllers
+        module: joint_position_controller
+        type: JointPositionController
+    joint_name: nod
+    joint_speed: 5.5
+    motor:
+        id: 13
+        init: 2400
+        min: 2200
+        max: 3150
+

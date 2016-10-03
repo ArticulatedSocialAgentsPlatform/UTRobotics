@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<package>
+
+    <name>ram_animation</name>
+    <version>0.1.0</version>
+    <description>The RAM animation package contains several modules for animating the robot</description>
+    <maintainer email="b.vandevijver@student.utwente.nl">B. van de Vijver</maintainer>
+    <author email="b.vandevijver@student.utwente.nl">B. van de Vijver</author>
+    <license>GPLv2</license>
+
+    <buildtool_depend>catkin</buildtool_depend>
+
+    <run_depend>ram_animator</run_depend>
+    <run_depend>ram_safe_shutdown</run_depend>
+
+    <export>
+        <metapackage/>
+    </export>
+</package>

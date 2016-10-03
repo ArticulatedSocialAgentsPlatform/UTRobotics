@@ -1,0 +1,392 @@
+<?xml version="1.0" encoding="utf-8"?>
+<COLLADA xmlns="http://www.collada.org/2005/11/COLLADASchema" version="1.4.1">
+  <asset>
+    <contributor>
+      <author>Blender User</author>
+      <authoring_tool>Blender 2.71.0 commit date:2014-06-12, commit time:18:39, hash:169c95b</authoring_tool>
+    </contributor>
+    <created>2015-03-25T14:54:13</created>
+    <modified>2015-03-25T14:54:13</modified>
+    <unit name="meter" meter="1"/>
+    <up_axis>Z_UP</up_axis>
+  </asset>
+  <library_cameras>
+    <camera id="Camera-camera" name="Camera">
+      <optics>
+        <technique_common>
+          <perspective>
+            <xfov sid="xfov">49.13434</xfov>
+            <aspect_ratio>1.777778</aspect_ratio>
+            <znear sid="znear">0.1</znear>
+            <zfar sid="zfar">100</zfar>
+          </perspective>
+        </technique_common>
+      </optics>
+      <extra>
+        <technique profile="blender">
+          <YF_dofdist>0</YF_dofdist>
+          <shiftx>0</shiftx>
+          <shifty>0</shifty>
+        </technique>
+      </extra>
+    </camera>
+  </library_cameras>
+  <library_images>
+    <image id="rechts_jpg" name="rechts_jpg">
+      <init_from>rechts.jpg</init_from>
+    </image>
+    <image id="onder_jpg" name="onder_jpg">
+      <init_from>onder.jpg</init_from>
+    </image>
+    <image id="links_jpg" name="links_jpg">
+      <init_from>links.jpg</init_from>
+    </image>
+    <image id="boven_jpg" name="boven_jpg">
+      <init_from>boven.jpg</init_from>
+    </image>
+    <image id="voor_jpg_002" name="voor_jpg_002">
+      <init_from>voor.jpg.002.jpg</init_from>
+    </image>
+    <image id="voor_jpg_001" name="voor_jpg_001">
+      <init_from>voor.jpg.001.jpg</init_from>
+    </image>
+  </library_images>
+  <library_effects>
+    <effect id="RechtsMaterial-effect">
+      <profile_COMMON>
+        <newparam sid="rechts_jpg-surface">
+          <surface type="2D">
+            <init_from>rechts_jpg</init_from>
+          </surface>
+        </newparam>
+        <newparam sid="rechts_jpg-sampler">
+          <sampler2D>
+            <source>rechts_jpg-surface</source>
+          </sampler2D>
+        </newparam>
+        <technique sid="common">
+          <phong>
+            <emission>
+              <color sid="emission">0 0 0 1</color>
+            </emission>
+            <ambient>
+              <color sid="ambient">1 1 1 1</color>
+            </ambient>
+            <diffuse>
+              <texture texture="rechts_jpg-sampler" texcoord="UVMap"/>
+            </diffuse>
+            <specular>
+              <color sid="specular">0.5 0.5 0.5 1</color>
+            </specular>
+            <shininess>
+              <float sid="shininess">50</float>
+            </shininess>
+            <index_of_refraction>
+              <float sid="index_of_refraction">1</float>
+            </index_of_refraction>
+          </phong>
+        </technique>
+        <extra>
+          <technique profile="GOOGLEEARTH">
+            <double_sided>1</double_sided>
+          </technique>
+        </extra>
+      </profile_COMMON>
+      <extra><technique profile="MAX3D"><double_sided>1</double_sided></technique></extra>
+    </effect>
+    <effect id="OnderMaterial-effect">
+      <profile_COMMON>
+        <newparam sid="onder_jpg-surface">
+          <surface type="2D">
+            <init_from>onder_jpg</init_from>
+          </surface>
+        </newparam>
+        <newparam sid="onder_jpg-sampler">
+          <sampler2D>
+            <source>onder_jpg-surface</source>
+          </sampler2D>
+        </newparam>
+        <technique sid="common">
+          <phong>
+            <emission>
+              <color sid="emission">0 0 0 1</color>
+            </emission>
+            <ambient>
+              <color sid="ambient">1 1 1 1</color>
+            </ambient>
+            <diffuse>
+              <texture texture="onder_jpg-sampler" texcoord="UVMap"/>
+            </diffuse>
+            <specular>
+              <color sid="specular">0.5 0.5 0.5 1</color>
+            </specular>
+            <shininess>
+              <float sid="shininess">50</float>
+            </shininess>
+            <index_of_refraction>
+              <float sid="index_of_refraction">1</float>
+            </index_of_refraction>
+          </phong>
+        </technique>
+        <extra>
+          <technique profile="GOOGLEEARTH">
+            <double_sided>1</double_sided>
+          </technique>
+        </extra>
+      </profile_COMMON>
+      <extra><technique profile="MAX3D"><double_sided>1</double_sided></technique></extra>
+    </effect>
+    <effect id="LinksMaterial-effect">
+      <profile_COMMON>
+        <newparam sid="links_jpg-surface">
+          <surface type="2D">
+            <init_from>links_jpg</init_from>
+          </surface>
+        </newparam>
+        <newparam sid="links_jpg-sampler">
+          <sampler2D>
+            <source>links_jpg-surface</source>
+          </sampler2D>
+        </newparam>
+        <technique sid="common">
+          <phong>
+            <emission>
+              <color sid="emission">0 0 0 1</color>
+            </emission>
+            <ambient>
+              <color sid="ambient">1 1 1 1</color>
+            </ambient>
+            <diffuse>
+              <texture texture="links_jpg-sampler" texcoord="UVMap"/>
+            </diffuse>
+            <specular>
+              <color sid="specular">0.5 0.5 0.5 1</color>
+            </specular>
+            <shininess>
+              <float sid="shininess">50</float>
+            </shininess>
+            <index_of_refraction>
+              <float sid="index_of_refraction">1</float>
+            </index_of_refraction>
+          </phong>
+        </technique>
+        <extra>
+          <technique profile="GOOGLEEARTH">
+            <double_sided>1</double_sided>
+          </technique>
+        </extra>
+      </profile_COMMON>
+      <extra><technique profile="MAX3D"><double_sided>1</double_sided></technique></extra>
+    </effect>
+    <effect id="BovenMaterial-effect">
+      <profile_COMMON>
+        <newparam sid="boven_jpg-surface">
+          <surface type="2D">
+            <init_from>boven_jpg</init_from>
+          </surface>
+        </newparam>
+        <newparam sid="boven_jpg-sampler">
+          <sampler2D>
+            <source>boven_jpg-surface</source>
+          </sampler2D>
+        </newparam>
+        <technique sid="common">
+          <phong>
+            <emission>
+              <color sid="emission">0 0 0 1</color>
+            </emission>
+            <ambient>
+              <color sid="ambient">1 1 1 1</color>
+            </ambient>
+            <diffuse>
+              <texture texture="boven_jpg-sampler" texcoord="UVMap"/>
+            </diffuse>
+            <specular>
+              <color sid="specular">0.5 0.5 0.5 1</color>
+            </specular>
+            <shininess>
+              <float sid="shininess">50</float>
+            </shininess>
+            <index_of_refraction>
+              <float sid="index_of_refraction">1</float>
+            </index_of_refraction>
+          </phong>
+        </technique>
+        <extra>
+          <technique profile="GOOGLEEARTH">
+            <double_sided>1</double_sided>
+          </technique>
+        </extra>
+      </profile_COMMON>
+      <extra><technique profile="MAX3D"><double_sided>1</double_sided></technique></extra>
+    </effect>
+    <effect id="VoorMaterial_001-effect">
+      <profile_COMMON>
+        <newparam sid="voor_jpg_001-surface">
+          <surface type="2D">
+            <init_from>voor_jpg_001</init_from>
+          </surface>
+        </newparam>
+        <newparam sid="voor_jpg_001-sampler">
+          <sampler2D>
+            <source>voor_jpg_001-surface</source>
+          </sampler2D>
+        </newparam>
+        <technique sid="common">
+          <phong>
+            <emission>
+              <color sid="emission">0 0 0 1</color>
+            </emission>
+            <ambient>
+              <color sid="ambient">1 1 1 1</color>
+            </ambient>
+            <diffuse>
+              <texture texture="voor_jpg_001-sampler" texcoord="UVMap"/>
+            </diffuse>
+            <specular>
+              <color sid="specular">0.5 0.5 0.5 1</color>
+            </specular>
+            <shininess>
+              <float sid="shininess">50</float>
+            </shininess>
+            <index_of_refraction>
+              <float sid="index_of_refraction">1</float>
+            </index_of_refraction>
+          </phong>
+        </technique>
+        <extra>
+          <technique profile="GOOGLEEARTH">
+            <double_sided>1</double_sided>
+          </technique>
+        </extra>
+      </profile_COMMON>
+      <extra><technique profile="MAX3D"><double_sided>1</double_sided></technique></extra>
+    </effect>
+  </library_effects>
+  <library_materials>
+    <material id="RechtsMaterial-material" name="RechtsMaterial">
+      <instance_effect url="#RechtsMaterial-effect"/>
+    </material>
+    <material id="OnderMaterial-material" name="OnderMaterial">
+      <instance_effect url="#OnderMaterial-effect"/>
+    </material>
+    <material id="LinksMaterial-material" name="LinksMaterial">
+      <instance_effect url="#LinksMaterial-effect"/>
+    </material>
+    <material id="BovenMaterial-material" name="BovenMaterial">
+      <instance_effect url="#BovenMaterial-effect"/>
+    </material>
+    <material id="VoorMaterial_001-material" name="VoorMaterial_001">
+      <instance_effect url="#VoorMaterial_001-effect"/>
+    </material>
+  </library_materials>
+  <library_geometries>
+    <geometry id="Cube-mesh" name="Cube">
+      <mesh>
+        <source id="Cube-mesh-positions">
+          <float_array id="Cube-mesh-positions-array" count="24">1 1 -1 1 -1 -1 -1 -0.9999998 -1 -0.9999997 1 -1 1 0.9999995 1 0.9999994 -1.000001 1 -1 -0.9999997 1 -1 1 1</float_array>
+          <technique_common>
+            <accessor source="#Cube-mesh-positions-array" count="8" stride="3">
+              <param name="X" type="float"/>
+              <param name="Y" type="float"/>
+              <param name="Z" type="float"/>
+            </accessor>
+          </technique_common>
+        </source>
+        <source id="Cube-mesh-normals">
+          <float_array id="Cube-mesh-normals-array" count="36">0 0 -1 0 0 1 1 -5.66244e-7 3.27825e-7 -4.76837e-7 -1 0 -1 2.08616e-7 -1.19209e-7 2.08616e-7 1 2.38419e-7 0 0 -1 0 0 1 1 0 -2.38419e-7 0 -1 -2.98023e-7 -1 2.38419e-7 -1.49012e-7 2.68221e-7 1 1.78814e-7</float_array>
+          <technique_common>
+            <accessor source="#Cube-mesh-normals-array" count="12" stride="3">
+              <param name="X" type="float"/>
+              <param name="Y" type="float"/>
+              <param name="Z" type="float"/>
+            </accessor>
+          </technique_common>
+        </source>
+        <source id="Cube-mesh-map-0">
+          <float_array id="Cube-mesh-map-0-array" count="72">0.9999001 0.9998998 1.0004e-4 0.9999001 9.998e-5 9.998e-5 0 0 0 0 0 0 0.9998997 0.9998997 9.998e-5 0.9998998 1.00397e-4 1.00099e-4 0 0 1 0 1 1 9.99765e-5 0.9998303 1.00008e-4 1.69553e-4 0.9998304 9.99765e-5 0 1 0 0 1 0 0.9998999 1.00278e-4 0.9999001 0.9998998 9.998e-5 9.998e-5 0 0 0 0 0 0 0.9999001 9.998e-5 0.9998997 0.9998997 1.00397e-4 1.00099e-4 0 1 0 0 1 1 0.9998304 0.9999001 9.99765e-5 0.9998303 0.9998304 9.99765e-5 1 1 0 1 1 0</float_array>
+          <technique_common>
+            <accessor source="#Cube-mesh-map-0-array" count="36" stride="2">
+              <param name="S" type="float"/>
+              <param name="T" type="float"/>
+            </accessor>
+          </technique_common>
+        </source>
+        <vertices id="Cube-mesh-vertices">
+          <input semantic="POSITION" source="#Cube-mesh-positions"/>
+        </vertices>
+        <polylist material="RechtsMaterial-material" count="4">
+          <input semantic="VERTEX" source="#Cube-mesh-vertices" offset="0"/>
+          <input semantic="NORMAL" source="#Cube-mesh-normals" offset="1"/>
+          <input semantic="TEXCOORD" source="#Cube-mesh-map-0" offset="2" set="0"/>
+          <vcount>3 3 3 3 </vcount>
+          <p>7 1 3 6 1 4 5 1 5 2 4 12 6 4 13 7 4 14 4 7 21 7 7 22 5 7 23 3 10 30 2 10 31 7 10 32</p>
+        </polylist>
+        <polylist material="OnderMaterial-material" count="2">
+          <input semantic="VERTEX" source="#Cube-mesh-vertices" offset="0"/>
+          <input semantic="NORMAL" source="#Cube-mesh-normals" offset="1"/>
+          <input semantic="TEXCOORD" source="#Cube-mesh-map-0" offset="2" set="0"/>
+          <vcount>3 3 </vcount>
+          <p>5 3 9 6 3 10 2 3 11 1 9 27 5 9 28 2 9 29</p>
+        </polylist>
+        <polylist material="LinksMaterial-material" count="2">
+          <input semantic="VERTEX" source="#Cube-mesh-vertices" offset="0"/>
+          <input semantic="NORMAL" source="#Cube-mesh-normals" offset="1"/>
+          <input semantic="TEXCOORD" source="#Cube-mesh-map-0" offset="2" set="0"/>
+          <vcount>3 3 </vcount>
+          <p>4 2 6 5 2 7 1 2 8 0 8 24 4 8 25 1 8 26</p>
+        </polylist>
+        <polylist material="BovenMaterial-material" count="2">
+          <input semantic="VERTEX" source="#Cube-mesh-vertices" offset="0"/>
+          <input semantic="NORMAL" source="#Cube-mesh-normals" offset="1"/>
+          <input semantic="TEXCOORD" source="#Cube-mesh-map-0" offset="2" set="0"/>
+          <vcount>3 3 </vcount>
+          <p>4 5 15 0 5 16 3 5 17 7 11 33 4 11 34 3 11 35</p>
+        </polylist>
+        <polylist material="VoorMaterial_001-material" count="2">
+          <input semantic="VERTEX" source="#Cube-mesh-vertices" offset="0"/>
+          <input semantic="NORMAL" source="#Cube-mesh-normals" offset="1"/>
+          <input semantic="TEXCOORD" source="#Cube-mesh-map-0" offset="2" set="0"/>
+          <vcount>3 3 </vcount>
+          <p>0 0 0 1 0 1 2 0 2 3 6 18 0 6 19 2 6 20</p>
+        </polylist>
+      </mesh>
+    </geometry>
+  </library_geometries>
+  <library_controllers/>
+  <library_visual_scenes>
+    <visual_scene id="Scene" name="Scene">
+      <node id="Camera" name="Camera" type="NODE">
+        <matrix sid="transform">0.6858805 -0.3173701 0.6548619 7.481132 0.7276338 0.3124686 -0.6106656 -6.50764 -0.01081678 0.8953432 0.4452454 5.343665 0 0 0 1</matrix>
+        <instance_camera url="#Camera-camera"/>
+      </node>
+      <node id="Cube" name="Cube" type="NODE">
+        <matrix sid="transform">0.115 0 0 0 0 0.09 0 0 0 0 0.045 0 0 0 0 1</matrix>
+        <instance_geometry url="#Cube-mesh">
+          <bind_material>
+            <technique_common>
+              <instance_material symbol="RechtsMaterial-material" target="#RechtsMaterial-material">
+                <bind_vertex_input semantic="UVMap" input_semantic="TEXCOORD" input_set="0"/>
+              </instance_material>
+              <instance_material symbol="OnderMaterial-material" target="#OnderMaterial-material">
+                <bind_vertex_input semantic="UVMap" input_semantic="TEXCOORD" input_set="0"/>
+              </instance_material>
+              <instance_material symbol="LinksMaterial-material" target="#LinksMaterial-material">
+                <bind_vertex_input semantic="UVMap" input_semantic="TEXCOORD" input_set="0"/>
+              </instance_material>
+              <instance_material symbol="BovenMaterial-material" target="#BovenMaterial-material">
+                <bind_vertex_input semantic="UVMap" input_semantic="TEXCOORD" input_set="0"/>
+              </instance_material>
+              <instance_material symbol="VoorMaterial_001-material" target="#VoorMaterial_001-material">
+                <bind_vertex_input semantic="UVMap" input_semantic="TEXCOORD" input_set="0"/>
+              </instance_material>
+            </technique_common>
+          </bind_material>
+        </instance_geometry>
+      </node>
+    </visual_scene>
+  </library_visual_scenes>
+  <scene>
+    <instance_visual_scene url="#Scene"/>
+  </scene>
+</COLLADA>

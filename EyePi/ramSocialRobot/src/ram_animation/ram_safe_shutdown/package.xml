@@ -1,0 +1,25 @@
+<?xml version="1.0"?>
+<package>
+
+    <name>ram_safe_shutdown</name>
+    <version>0.1.0</version>
+    <description>The ram_safe_shutdown package</description>
+    <maintainer email="b.vandevijver@student.utwente.nl">B. van de Vijver</maintainer>
+    <author email="b.vandevijver@student.utwente.nl">B. van de Vijver</author>
+    <license>GPLv2</license>
+
+    <buildtool_depend>catkin</buildtool_depend>
+
+    <build_depend>roscpp</build_depend>
+    <build_depend>std_msgs</build_depend>
+    <build_depend>dynamixel_msgs</build_depend>
+    <build_depend>ram_animation_msgs</build_depend>
+    <build_depend>ram_input_msgs</build_depend>
+
+    <run_depend>roscpp</run_depend>
+    <run_depend>std_msgs</run_depend>
+    <run_depend>dynamixel_msgs</run_depend>
+    <run_depend>ram_animation_msgs</run_depend>
+    <run_depend>ram_input_msgs</run_depend>
+
+</package>

@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<package>
+
+    <name>ram_input</name>
+    <version>0.1.0</version>
+    <description>The RAM input package which contains several modules for inputs</description>
+    <maintainer email="b.vandevijver@student.utwente.nl">B. van de Vijver</maintainer>
+    <author email="b.vandevijver@student.utwente.nl">B. van de Vijver</author>
+    <license>GPLv2</license>
+
+    <buildtool_depend>catkin</buildtool_depend>
+
+    <run_depend>ram_midi_driver</run_depend>
+
+    <export>
+        <metapackage/>
+    </export>
+
+</package>

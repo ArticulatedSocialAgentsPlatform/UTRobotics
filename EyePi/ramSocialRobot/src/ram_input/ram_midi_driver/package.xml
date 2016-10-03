@@ -1,0 +1,26 @@
+<?xml version="1.0"?>
+<package>
+
+    <name>ram_midi_driver</name>
+    <version>0.2.0</version>
+    <description>The ram_midi_driver package, adjusted from http://ros.org/wiki/korg_nanokontrol</description>
+    <maintainer email="b.vandevijver@student.utwente.nl">B. van de Vijver</maintainer>
+    <author email="namniart@gmail.com">Austin Hendrix</author>
+    <author email="j.oosterkamp@student.utwente.nl">Jens Oosterkamp</author>
+    <license>BSD</license>
+
+    <buildtool_depend>catkin</buildtool_depend>
+
+    <build_depend>rospy</build_depend>
+    <build_depend>sensor_msgs</build_depend>
+    <build_depend>ram_input_msgs</build_depend>
+    <build_depend>ram_animation_msgs</build_depend>
+
+    <run_depend>rospy</run_depend>
+    <run_depend>python-pygame</run_depend>
+    <run_depend>message_runtime</run_depend>
+    <run_depend>sensor_msgs</run_depend>
+    <run_depend>ram_input_msgs</run_depend>
+    <run_depend>ram_animation_msgs</run_depend>
+
+</package>

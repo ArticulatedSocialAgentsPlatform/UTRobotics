@@ -1,0 +1,1 @@
+although this fact is not documented yet, I think that we need the robotutils package to be installed as well! at least, for relay.py to be able to use get_config

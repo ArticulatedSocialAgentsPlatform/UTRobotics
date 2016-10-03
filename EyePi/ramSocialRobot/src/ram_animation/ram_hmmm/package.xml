@@ -1,0 +1,27 @@
+<?xml version="1.0"?>
+<package>
+    <name>ram_hmmm</name>
+    <version>0.0.0</version>
+    <description>The ram_hmmm package</description>
+    <maintainer email="b.vandevijver@student.utwente.nl">B. van de Vijver</maintainer>
+    <author email="b.vandevijver@student.utwente.nl">B. van de Vijver</author>
+    <license>GPLv2</license>
+
+    <buildtool_depend>catkin</buildtool_depend>
+
+    <build_depend>roscpp</build_depend>
+    <build_depend>ram_animation_msgs</build_depend>
+    <build_depend>ram_input_msgs</build_depend>
+    <build_depend>ram_output_msgs</build_depend>
+    <build_depend>dynamic_reconfigure</build_depend>
+    <build_depend>ram_animator</build_depend>
+
+    <run_depend>ros_cpp</run_depend>
+    <run_depend>message_runtime</run_depend>
+    <run_depend>ram_animation_msgs</run_depend>
+    <run_depend>ram_input_msgs</run_depend>
+    <run_depend>ram_output_msgs</run_depend>
+    <run_depend>dynamic_reconfigure</run_depend>
+    <run_depend>ram_animator</run_depend>
+
+</package>

@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<package>
+
+    <name>ram_output_msgs</name>
+    <version>0.1.0</version>
+    <description>The ram_output_msgs package provides several messages for system output</description>
+    <maintainer email="b.vandevijver@student.utwente.nl">B. van de Vijver</maintainer>
+    <author email="b.vandevijver@student.utwente.nl">B. van de Vijver</author>
+    <license>GPLv2</license>
+
+    <buildtool_depend>catkin</buildtool_depend>
+
+    <build_depend>message_generation</build_depend>
+    <build_depend>std_msgs</build_depend>
+
+    <run_depend>message_runtime</run_depend>
+    <run_depend>std_msgs</run_depend>
+
+</package>

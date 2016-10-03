@@ -1,0 +1,19 @@
+<launch>
+    <group ns="ram/dynamixel">
+
+        <node name="dynamixel_manager" pkg="dynamixel_controllers" type="controller_manager.py" required="false" output="screen">
+            <rosparam>
+                namespace: dxl_manager
+                port: ram/dynamixel
+                serial_ports:
+                    robot:
+                        port_name: "/dev/ttyUSB0"
+                        baud_rate: 1000000
+                        min_motor_id: 1
+                        max_motor_id: 15
+                        update_rate: 1
+            </rosparam>
+        </node>
+
+    </group>
+</launch>

@@ -1,0 +1,27 @@
+﻿<?xml version='1.0' encoding='utf-8'?>
+<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="KinectSkeleton.Properties" GeneratedClassName="Settings">
+  <Profiles />
+  <Settings>
+    <Setting Name="apolloHost" Type="System.String" Scope="User">
+      <Value Profile="(Default)">130.89.12.47</Value>
+    </Setting>
+    <Setting Name="apolloPort" Type="System.String" Scope="User">
+      <Value Profile="(Default)">61613</Value>
+    </Setting>
+    <Setting Name="apolloUser" Type="System.String" Scope="User">
+      <Value Profile="(Default)">admin</Value>
+    </Setting>
+    <Setting Name="apolloPassword" Type="System.String" Scope="User">
+      <Value Profile="(Default)">password</Value>
+    </Setting>
+    <Setting Name="apolloTopic" Type="System.String" Scope="User">
+      <Value Profile="(Default)">kinect_skeleton_data</Value>
+    </Setting>
+    <Setting Name="useJSON" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">False</Value>
+    </Setting>
+    <Setting Name="maxUpdateRate" Type="System.Decimal" Scope="User">
+      <Value Profile="(Default)">30</Value>
+    </Setting>
+  </Settings>
+</SettingsFile>
