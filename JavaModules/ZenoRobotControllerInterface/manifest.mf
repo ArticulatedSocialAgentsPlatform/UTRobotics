@@ -1,0 +1,10 @@
+Manifest-Version: 1.0
+Main-Class: main
+       
+Name: ZenoRobotControllerInterface
+Specification-Title:    ZenoRobotControllerInterface
+Specification-Version:  0.2
+Specification-Vendor:   HMI
+Implementation-Title:   ZenoRobotControllerInterface
+Implementation-Version: August 4 2015  11:26 AM
+Implementation-Vendor:  HMI

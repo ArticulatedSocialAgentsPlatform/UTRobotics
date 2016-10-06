@@ -1,0 +1,10 @@
+Manifest-Version: 1.0
+Main-Class: main
+       
+Name: AsapZenoEngine
+Specification-Title:    AsapZenoEngine
+Specification-Version:  0.2
+Specification-Vendor:   Asap
+Implementation-Title:   AsapZenoEngine
+Implementation-Version: August 4 2015  11:25 AM
+Implementation-Vendor:  Asap

@@ -1,0 +1,3 @@
+change to use middleware packages
+
+rename to EyePi engine (!)

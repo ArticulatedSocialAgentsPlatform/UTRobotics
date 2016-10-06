@@ -1,0 +1,10 @@
+Manifest-Version: 1.0
+Main-Class: main
+       
+Name: HmiYARP
+Specification-Title:    HmiYARP
+Specification-Version:  0.2
+Specification-Vendor:   HMI
+Implementation-Title:   HmiYARP
+Implementation-Version: August 2015  11:25 AM
+Implementation-Vendor:  HMI
