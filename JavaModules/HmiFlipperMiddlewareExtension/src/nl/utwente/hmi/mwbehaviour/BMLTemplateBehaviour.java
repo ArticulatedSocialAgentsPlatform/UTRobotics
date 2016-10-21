@@ -26,9 +26,14 @@ import org.slf4j.LoggerFactory;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import asap.realizerport.RealizerPort;
+
 public class BMLTemplateBehaviour implements BehaviourClass{
 	private static Logger logger = LoggerFactory.getLogger(BMLTemplateBehaviour.class.getName());
 
+	//this is the realizerport we should use for sending BML to ASAP
+	private RealizerPort realizerPort;
+	
 	private String bml = "";
 	private boolean behaviourPrepared = false;
 	
@@ -46,23 +51,14 @@ public class BMLTemplateBehaviour implements BehaviourClass{
 	
 	public BMLTemplateBehaviour(){
 		super();
-		middlewareLoaderClass = (String)Configuration.getInstance().getConfig("mw_bml_loaderclass");
-		TEMPLATE_DIR = (String)Configuration.getInstance().getConfig("bml_template_dir");
-
-		logger.info("Writing BML via middleware [{}]",middlewareLoaderClass);
-        String[] propsStrings = ((String)Configuration.getInstance().getConfig("mw_bml_properties")).split(",");
-        ps = new Properties();
-        for (int i = 0; i < propsStrings.length; i++)
-        {
-            String[] prop = propsStrings[i].split(":");
-            ps.put(prop[0],prop[1]);
-        }
-		GenericMiddlewareLoader gml = new GenericMiddlewareLoader(middlewareLoaderClass, ps);
-        middleware = gml.load();
 		
 		random = new Random();
 		
 		this.recordHelper = new RecordHelper();
+	}
+	
+	public void setRealizerPort(RealizerPort realizerPort){
+		this.realizerPort = realizerPort;
 	}
 	
 	@Override
@@ -75,13 +71,7 @@ public class BMLTemplateBehaviour implements BehaviourClass{
 			logger.debug("Sending the BML: \n{}", bml);
 
             try {
-				JsonNode value = object("bml",
-									object("content",
-											URLEncoder.encode(bml,"UTF-8")
-									)
-								).end();
-
-	            middleware.sendData(value);
+				realizerPort.performBML(bml);
 				behaviourPrepared = false;
             } catch (Exception e)
             {

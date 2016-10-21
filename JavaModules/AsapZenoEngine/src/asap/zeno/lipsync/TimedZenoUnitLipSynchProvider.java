@@ -33,6 +33,10 @@ public class TimedZenoUnitLipSynchProvider implements LipSynchProvider
     private final PlanManager<TimedZenoUnit> zenoPlanManager;
     private final PegBoard pegBoard;
     
+    //TODO: make this configurable
+    //this value controls how much a viseme is offset when sending.. set a negative value if viseme should be sent before its being spoken
+    private static final double VISEME_OFFSET = -0.2d;
+    
     public TimedZenoUnitLipSynchProvider(ZenoVisemeBinding visBinding, ZenoEmbodiment ze, PlanManager<TimedZenoUnit>zenoPlanManager, PegBoard pb)
     {
         visemeBinding = visBinding;
@@ -80,10 +84,10 @@ public class TimedZenoUnitLipSynchProvider implements LipSynchProvider
         for (TimedZenoUnit plannedZU : tzus)
         {
             //TODO: if we're really only going to do open and closed mouths, we might conflate the TZUs that have the same pose... but that's kind of tricky to find out at this point
-            TimePeg startPeg = new OffsetPeg(bs.getTimePeg("start"), startTimes.get(plannedZU));
+            TimePeg startPeg = new OffsetPeg(bs.getTimePeg("start"), startTimes.get(plannedZU) + VISEME_OFFSET);
 
             plannedZU.setTimePeg("start", startPeg);
-            TimePeg endPeg = new OffsetPeg(bs.getTimePeg("start"), endTimes.get(plannedZU));
+            TimePeg endPeg = new OffsetPeg(bs.getTimePeg("start"), endTimes.get(plannedZU) + VISEME_OFFSET);
             plannedZU.setTimePeg("end", endPeg);
             log.debug("adding zeno pose movement at {}-{}", plannedZU.getStartTime(), plannedZU.getEndTime());
         }        

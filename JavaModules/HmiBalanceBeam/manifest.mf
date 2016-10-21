@@ -1,0 +1,10 @@
+Manifest-Version: 1.0
+Main-Class: main
+       
+Name: HmiBalanceBeam
+Specification-Title:    HmiBalanceBeam
+Specification-Version:  0.1
+Specification-Vendor:   HMI
+Implementation-Title:   HmiBalanceBeam
+Implementation-Version: September 20 2016  11:25 AM
+Implementation-Vendor:  HMI

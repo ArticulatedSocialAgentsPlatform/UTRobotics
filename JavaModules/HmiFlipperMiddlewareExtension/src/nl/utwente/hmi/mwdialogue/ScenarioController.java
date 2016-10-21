@@ -1,8 +1,10 @@
 package nl.utwente.hmi.mwdialogue;
 
 import hmi.flipper.behaviourselection.TemplateController;
+import hmi.flipper.behaviourselection.template.behaviours.BehaviourClassProvider;
 import hmi.flipper.defaultInformationstate.DefaultItem;
 import hmi.flipper.defaultInformationstate.DefaultRecord;
+import hmi.flipper.exceptions.TemplateParseException;
 import hmi.flipper.informationstate.Item;
 import hmi.flipper.informationstate.Record;
 import hmi.util.ClockListener;
@@ -25,6 +27,7 @@ import nl.utwente.hmi.communication.Datasource;
 import nl.utwente.hmi.communication.Datatarget;
 import nl.utwente.hmi.middleware.Middleware;
 import nl.utwente.hmi.middleware.loader.GenericMiddlewareLoader;
+import nl.utwente.hmi.mwbehaviour.BMLTemplateBehaviour;
 import nl.utwente.hmi.mwdialogue.function.LoggerFunctions;
 import nl.utwente.hmi.mwdialogue.function.PersistenceFunctions;
 import nl.utwente.hmi.mwdialogue.function.TaskGenerationFunctions;
@@ -96,8 +99,6 @@ public class ScenarioController implements Observer, Runnable, ClockListener, BM
 		this.lossyInformationStateUpdateMap = new ConcurrentHashMap<String, InformationStateUpdateTask>();
 	}
 	
-	
-	
 	public void initScenario(){
 		initFlipper();
 		initMiddlewares();
@@ -154,19 +155,19 @@ public class ScenarioController implements Observer, Runnable, ClockListener, BM
 	private void initMiddlewares(){
 		//first, start the BML request and feedback, for this we use a RealizerPort
 		String mwBMLLoaderClass = (String)Configuration.getInstance().getConfig("mw_bml_loaderclass");
-		Properties mwBMLProperties = new Properties();
-		
-		//parse the properties for this middleware
-		List<String> ps = new ArrayList<String>(Arrays.asList(((String)Configuration.getInstance().getConfig("mw_bml_properties")).split(",")));
-		for(String p : ps){
-			String[] prop = p.split(":");
-			if(prop.length == 2){
-				mwBMLProperties.put(prop[0], prop[1]);
-			}
-		}
+		Properties mwBMLProperties = parseProperties((String)Configuration.getInstance().getConfig("mw_bml_properties"));
 		
 		realizerPort = new BMLRealizerToMiddlewareAdapter(mwBMLLoaderClass, mwBMLProperties);
         realizerPort.addListeners(this);
+        
+        //TODO: this is a bit of an ugly hack, but we need to add the realizerport to the BMLTemplateBehaviour so we don't accidentally initiate multiple versions of the same YARP port
+        try {
+			BMLTemplateBehaviour bmlTB = (BMLTemplateBehaviour) BehaviourClassProvider.getBehaviourClass("nl.utwente.hmi.mwbehaviour.BMLTemplateBehaviour");
+			bmlTB.setRealizerPort(realizerPort);
+		} catch (Exception e) {
+			logger.error("Unable to set realizerport on BMLTemplateBehaviour class.. See stacktrace..");
+			e.printStackTrace();
+		}
 
 		//then load the informationstate dump middleware (to which we stream IS updates)
 		GenericMiddlewareLoader isDumperLoader = new GenericMiddlewareLoader((String)Configuration.getInstance().getConfig("mw_is_dump_loaderclass"),parseProperties((String)Configuration.getInstance().getConfig("mw_is_dump_properties")));
@@ -231,7 +232,7 @@ public class ScenarioController implements Observer, Runnable, ClockListener, BM
 		Properties returnProperties = new Properties();
 		
 		for(int i = 0; i < ps.size(); i++){
-			String[] prop = ps.get(i).split(":");
+			String[] prop = ps.get(i).split(":",2);
 			if(prop.length == 2){
 				returnProperties.put(prop[0], prop[1]);
 			}
