@@ -37,9 +37,6 @@ public class BMLTemplateBehaviour implements BehaviourClass{
 	private String bml = "";
 	private boolean behaviourPrepared = false;
 	
-	private Middleware middleware;
-	private String middlewareLoaderClass = "";
-    private Properties ps;
 	private Random random;
 	
 	private RecordHelper recordHelper;
@@ -51,6 +48,7 @@ public class BMLTemplateBehaviour implements BehaviourClass{
 	
 	public BMLTemplateBehaviour(){
 		super();
+		TEMPLATE_DIR = (String)Configuration.getInstance().getConfig("bml_template_dir");
 		
 		random = new Random();
 		
