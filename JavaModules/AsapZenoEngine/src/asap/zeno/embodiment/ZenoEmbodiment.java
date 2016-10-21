@@ -23,6 +23,8 @@ import hmi.environmentbase.Embodiment;
 import hmi.environmentbase.EmbodimentLoader;
 import hmi.environmentbase.Environment;
 import hmi.environmentbase.Loader;
+import hmi.xml.XMLScanException;
+import hmi.xml.XMLStructureAdapter;
 import hmi.xml.XMLTokenizer;
 
 import java.io.IOException;
@@ -73,19 +75,40 @@ public class ZenoEmbodiment implements Embodiment, EmbodimentLoader, ZenoSpeechL
      * Connects to and registers some producers and consumers for the various topics made available by the ROS Bridge
      */
     @Override
-    public void readXML(XMLTokenizer tokenizer, String loaderId, String vhId, String vhName, Environment[] environments, Loader ... requiredLoaders) 
+    public void readXML(XMLTokenizer theTokenizer, String loaderId, String vhId, String vhName, Environment[] environments, Loader ... requiredLoaders) 
     	throws IOException
     {
         setId(loaderId);
         
-		//GenericMiddlewareLoader.setGlobalPropertiesFile("enterfacedialog/middleware.properties");
+        if(!theTokenizer.atSTag("MiddlewareOptions"))
+        {
+            throw new XMLScanException("ZenoEmbodiment requires 1 inner MiddlewareOptions element that describes how it communicates with the Zeno robot controller");            
+        }
+        String middlewareLoader = null;
+        Properties middlewareProperties = null;
         
-        //TODO: proper config of this now hardcoded settings
-        Properties ps = new Properties();
-		ps.put("iTopic", "/topic/hmmmZenoOut");
-		ps.put("oTopic", "/topic/hmmmZenoIn");
-		
-        GenericMiddlewareLoader gml = new GenericMiddlewareLoader("nl.utwente.hmi.middleware.stomp.STOMPMiddlewareLoader", ps);
+        HashMap<String, String> attrMap = theTokenizer.getAttributes();
+        XMLStructureAdapter adapter = new XMLStructureAdapter();
+        middlewareLoader = adapter.getRequiredAttribute("loaderclass", attrMap, theTokenizer);
+
+        theTokenizer.takeSTag("MiddlewareOptions");
+
+        middlewareProperties = new Properties();
+        while (theTokenizer.atSTag("MiddlewareProperty"))
+        {
+            HashMap<String, String> attrMap2 = theTokenizer.getAttributes();
+            XMLStructureAdapter adapter2 = new XMLStructureAdapter();
+            String name = adapter2.getRequiredAttribute("name", attrMap, theTokenizer);
+            String value = adapter2.getRequiredAttribute("value", attrMap, theTokenizer);
+            middlewareProperties.put(name, value);
+            theTokenizer.takeSTag("MiddlewareProperty");
+            theTokenizer.takeETag("MiddlewareProperty"); 
+        }
+        theTokenizer.takeETag("MiddlewareOptions");
+
+        if (!theTokenizer.atETag("Loader")) throw new XMLScanException("ZenoEmbodiment can only have 1 MiddlewareOptions elements");
+        
+        GenericMiddlewareLoader gml = new GenericMiddlewareLoader(middlewareLoader, middlewareProperties);
         Middleware m = gml.load();
 
         zenoRobot = new ZRCToMiddleware(m);
