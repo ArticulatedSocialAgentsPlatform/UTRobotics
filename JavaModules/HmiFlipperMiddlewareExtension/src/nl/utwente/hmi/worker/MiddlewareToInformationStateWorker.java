@@ -90,6 +90,7 @@ public class MiddlewareToInformationStateWorker extends AbstractWorker implement
 				}
 	    	} else {
 		    	//ok nothing specific to check for, so we want to just recursively add the whole data
+	    		//TODO: this assumes toplevel node is a record, but theoretically, it could be a list (yay YARP).. so if this causes issues we need to check the type after conversion
 	    		rec = rh.convertJSONToIS(jn).getRecord();
 	    	}
 	    	

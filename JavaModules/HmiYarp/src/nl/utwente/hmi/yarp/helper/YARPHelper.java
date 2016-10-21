@@ -109,82 +109,79 @@ public class YARPHelper {
 			innerValues.add(convertValueToJSON(b.get(i)));
 		}
 		
-		//now we need to figure out how we add these inner values to the thing we are returning
-		//if we have a key, we must return an ObjectNode consisting of whatever is in these values
-		if(keyPresent){
-			ObjectNode root = om.createObjectNode();
-			ObjectNode inner = om.createObjectNode();
+		ObjectNode root = om.createObjectNode();
+		ObjectNode inner = om.createObjectNode();
 
-			ArrayNode innerArray = om.createArrayNode();
-			ArrayNode leaves = om.createArrayNode();
-			
-			//different types of inner nodes need to be treated differently
-			for(JsonNode jn : innerValues){
-				if(jn.isObject()){
-					//inner object nodes should be added directly to this node with their key-values
-					//this allows for better/easier access by other data processors
-					//example bottle person (name daniel) (id 5): instead of {person:[{name:daniel},{id:5}]} (would access using something like person.get(1).get(name))
-					//we would expect something like: {person:{{name:daniel},{id:5}}} (would access by person.get(name))
-					ObjectNode innerON = (ObjectNode)jn;
-					Iterator<Entry<String,JsonNode>> innerIt = innerON.fields();
-					while(innerIt.hasNext()){
-						Entry<String,JsonNode> e = innerIt.next();
-						
-						//if we already know this key, we create an inner array so we don't loose information
-						//an example: addpersons (person (name d)) (person (name t))
-						//this will become addpersons:{person:[{name:d},{name:t}]}
-						if(inner.get(e.getKey()) != null){
-							if(inner.get(e.getKey()).getNodeType() == JsonNodeType.ARRAY){
-								ArrayNode tmpArr = (ArrayNode)inner.get(e.getKey());
-								tmpArr.add(e.getValue());
-								inner.set(e.getKey(), tmpArr);
-							} else {
-								ArrayNode tmpArr = om.createArrayNode();
-								tmpArr.add(inner.get(e.getKey()));
-								tmpArr.add(e.getValue());
-								inner.set(e.getKey(), tmpArr);
-							}
+		ArrayNode innerArray = om.createArrayNode();
+		ArrayNode leaves = om.createArrayNode();
+		
+		//different types of inner nodes need to be treated differently
+		for(JsonNode jn : innerValues){
+			if(jn.isObject()){
+				//inner object nodes should be added directly to this node with their key-values
+				//this allows for better/easier access by other data processors
+				//example bottle person (name daniel) (id 5): instead of {person:[{name:daniel},{id:5}]} (would access using something like person.get(1).get(name))
+				//we would expect something like: {person:{{name:daniel},{id:5}}} (would access by person.get(name))
+				ObjectNode innerON = (ObjectNode)jn;
+				Iterator<Entry<String,JsonNode>> innerIt = innerON.fields();
+				while(innerIt.hasNext()){
+					Entry<String,JsonNode> e = innerIt.next();
+					
+					//if we already know this key, we create an inner array so we don't loose information
+					//an example: addpersons (person (name d)) (person (name t))
+					//this will become addpersons:{person:[{name:d},{name:t}]}
+					if(inner.get(e.getKey()) != null){
+						if(inner.get(e.getKey()).getNodeType() == JsonNodeType.ARRAY){
+							ArrayNode tmpArr = (ArrayNode)inner.get(e.getKey());
+							tmpArr.add(e.getValue());
+							inner.set(e.getKey(), tmpArr);
 						} else {
-							//key is not yet known: we can safely add the inner JsonNode to the parent using it's key and value
-							inner.set(e.getKey(), e.getValue());
+							ArrayNode tmpArr = om.createArrayNode();
+							tmpArr.add(inner.get(e.getKey()));
+							tmpArr.add(e.getValue());
+							inner.set(e.getKey(), tmpArr);
 						}
+					} else {
+						//key is not yet known: we can safely add the inner JsonNode to the parent using it's key and value
+						inner.set(e.getKey(), e.getValue());
 					}
-				} else if(jn.isArray()){
-					//inner (anonymous) lists need to be treaded differently
-					//example: addpersons ((name d) (name t))
-					//should become: addpersons:{anonymouslist_1:[{name:d},{name:t}]}
-					innerArray.add(jn);
-				} else {
-					//if we have more than one leaf, we need to preserve the order of the values for direct access
-					//example: (phonenrs 0123456789 0987654321)
-					//should translate to: {phonenrs:{{v_1:0123456789},{v_2:0987654321}}}
-					leaves.add(jn);
 				}
+			} else if(jn.isArray()){
+				//inner (anonymous) lists need to be treaded differently
+				//example: addpersons ((name d) (name t))
+				//should become: addpersons:{anonymouslist_1:[{name:d},{name:t}]}
+				innerArray.add(jn);
+			} else {
+				//if we have more than one leaf, we need to preserve the order of the values for direct access
+				//example: (phonenrs 0123456789 0987654321)
+				//should translate to: {phonenrs:{{v_1:0123456789},{v_2:0987654321}}}
+				leaves.add(jn);
 			}
+		}
 
-			if(innerArray.size() > 0){
-				int i = 1;
-				for(JsonNode jn : innerArray){
-					inner.set("anonymouslist_"+i, jn);
-					i++;
-				}
+		if(innerArray.size() > 0){
+			int i = 1;
+			for(JsonNode jn : innerArray){
+				inner.set("anonymouslist_"+i, jn);
+				i++;
 			}
+		}
 
-			if(leaves.size() > 0){
-				int i = 1;
-				for(JsonNode jn : leaves){
-					inner.set("v_"+i, jn);
-					i++;
-				}
+		if(leaves.size() > 0){
+			int i = 1;
+			for(JsonNode jn : leaves){
+				inner.set("v_"+i, jn);
+				i++;
 			}
-			
+		}
+		
+		if(keyPresent){
 			root.set(key, inner);
 			return root;
-			
 		} else {
-			//if we don't have a key, we can just return an ArrayNode
-			return innerValues;
+			return inner;
 		}
+		
 	}
 	
 	/**
@@ -215,7 +212,13 @@ public class YARPHelper {
 	 * @return the Bottle that represents the JSON
 	 */
 	public Bottle convertJSONToBottle(JsonNode jn){
-		return convertJSONToBottle(jn, new Bottle()).get(0).asList();
+		Bottle ret = convertJSONToBottle(jn, new Bottle());
+		//this is just one bottle with one inner record, so we strip away the outside container
+		if(ret.size() == 1){
+			return ret.get(0).asList();
+		} else {
+			return ret;
+		}
 	}
 	
 
@@ -243,9 +246,6 @@ public class YARPHelper {
 				} else if(e.getKey().startsWith("v_")) {
 					convertJSONToBottle(e.getValue(), b);
 				} else {
-					if(e.getKey().equals("action")){
-						System.out.println(""+ e.getValue() + e.getValue().isArray());
-					}
 					if(e.getValue().isArray()){
 						for(JsonNode innerJN : e.getValue()){
 							Bottle innerBottle = b.addList();

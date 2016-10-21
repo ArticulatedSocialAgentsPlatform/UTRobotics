@@ -148,7 +148,7 @@ public class TaskGenerationFunctions {
 			ArrayList<Task> ts = tasks.get(difficulty);
 			Random random = new Random();
 			//get a random one, as long as it isnt the same as our previous assignment
-			//todo: this is now very bruteforce, look for nicer solution (queue or stack..?)
+			//TODO: this is now very bruteforce, look for nicer solution (queue or stack..?)
 			Task nextTask = ts.get(random.nextInt(ts.size()));
 			while(nextTask.equals(previousTask)){
 				nextTask = ts.get(random.nextInt(ts.size()));
