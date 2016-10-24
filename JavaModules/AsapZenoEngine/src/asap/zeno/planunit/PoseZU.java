@@ -113,7 +113,8 @@ public class PoseZU extends ZenoUnit
             pose = value;
             try 
             {
-	            XMLTokenizer tok = XMLTokenizer.forResource("zeno_poses", pose+".xml");
+            	//TODO: make this configurable from the loader
+	            XMLTokenizer tok = XMLTokenizer.forResource("ZENO/poses", pose+".xml");
 	            tok.takeSTag("Pose");
 	            while (!tok.atETag("Pose"))
 	            {
