@@ -214,8 +214,13 @@ public class SpeakZU extends ZenoUnit
      */
     public double getPreferredDuration()
     {
+    	//TODO: make guesstimate better, and/or incorporate the feedback from zeno TTS!
 		logger.error("unimplemented method");
-		return 0;
+		//since we have no way of knowing how long it might take.. 
+		//make a very naive guess initially, based on the amount of words in the sentence,  
+		//if we get feedback from Zeno about the actual endtime, the timepeg is updated
+		int nrWords = text.split(" ").length;
+		return nrWords / 2.0d;
 	}
 
     public double getRigidity()
