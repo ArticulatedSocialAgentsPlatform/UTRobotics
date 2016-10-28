@@ -113,7 +113,7 @@ public class ZenoEngineLoader implements EngineLoader
             catch (Exception e)
             {
                 e.printStackTrace();
-                throw new RuntimeException("Cannnot load StompZenoBinding: " + e);
+                throw new RuntimeException("Cannnot load ZenoBinding: " + e);
             }
             tokenizer.takeEmptyElement("ZenoBinding");
         }
