@@ -1,6 +1,7 @@
 /lib
 /build
 /dist
+/test/lib
 
 # Created by https://www.gitignore.io/api/osx,eclipse,java
 
