@@ -222,24 +222,24 @@ public class TaskGenerationFunctions {
 			if(difficulty > 0 && difficulty <= 5){
 				//are we using 2 or 3 pots..?
 				if(pots.size() == 2){
-					textRepresentation = String.format("Zet eerst de blokken teurg onder de balans. Zet dan een %s potje op pin %s, en een %s potje op pin %s. Wat gaat er gebeuren met de balans?", 
+					textRepresentation = String.format("Zet eerst de blokken terug onder de balans. Zet dan een %s potje op pin %s, en een %s potje op pin %s. Wat gaat er gebeuren met de balans?", 
 										pots.get(0).getColor(), pots.get(0).getPosition(), 
 										pots.get(1).getColor(), pots.get(1).getPosition());
 				} else if(pots.size() == 3){
-					textRepresentation = String.format("Zet eerst de blokken teurg onder de balans. Zet dan een %s potje op pin %s, een %s potje op pin %s, en een %s potje op pin %s. Wat gaat er gebeuren met de balans?", 
+					textRepresentation = String.format("Zet eerst de blokken terug onder de balans. Zet dan een %s potje op pin %s, een %s potje op pin %s, en een %s potje op pin %s. Wat gaat er gebeuren met de balans?", 
 							pots.get(0).getColor(), pots.get(0).getPosition(), 
 							pots.get(1).getColor(), pots.get(1).getPosition(), 
 							pots.get(2).getColor(), pots.get(2).getPosition());
 				}
 			} else if(difficulty == 6 && pots.size() == 2){
-				textRepresentation = String.format("Zet eerst de blokken teurg onder de balans. Gebruik dan een %s potje en een %s potje. Zet het %s potje op pin %s. Waar moet je het andere potje neerzetten om de balans in evenwicht te houden?", 
+				textRepresentation = String.format("Zet eerst de blokken terug onder de balans. Gebruik dan een %s potje en een %s potje. Zet het %s potje op pin %s. Waar moet je het andere potje neerzetten om de balans in evenwicht te houden?", 
 						pots.get(0).getColor(), pots.get(1).getColor(), 
 						pots.get(0).getColor(), pots.get(0).getPosition());
 			} else if(difficulty == 7 && pots.size() == 2){
-				textRepresentation = String.format("Zet eerst de blokken teurg onder de balans. Gebruik dan een %s potje en een %s potje. Waar moet je de potjes neerzetten om de balans in evenwicht te houden?", 
+				textRepresentation = String.format("Zet eerst de blokken terug onder de balans. Gebruik dan een %s potje en een %s potje. Waar moet je de potjes neerzetten om de balans in evenwicht te houden?", 
 						pots.get(0).getColor(), pots.get(1).getColor());
 			} else if(difficulty == 8 && pots.size() == 3){
-				textRepresentation = String.format("Zet eerst de blokken teurg onder de balans. Gebruik dan een %s potje, een %s potje en een %s potje. Waar moet je de potjes neerzetten om de balans in evenwicht te houden?", 
+				textRepresentation = String.format("Zet eerst de blokken terug onder de balans. Gebruik dan een %s potje, een %s potje en een %s potje. Waar moet je de potjes neerzetten om de balans in evenwicht te houden?", 
 						pots.get(0).getColor(), pots.get(1).getColor(), pots.get(2).getColor());
 			}
 			
