@@ -268,17 +268,17 @@ public class TaskGenerationFunctions {
 			this.position = "";
 			
 			if(position == 1){
-				this.position = "een";
+				this.position = "1";
 			} else if(position == 2){
-				this.position = "twee";
+				this.position = "2";
 			} else if(position == 3){
-				this.position = "drie";
+				this.position = "3";
 			} else if(position == 4){
-				this.position = "vier";
+				this.position = "4";
 			} else if(position == 5){
-				this.position = "vijf";
+				this.position = "5";
 			} else if(position == 6){
-				this.position = "zes";
+				this.position = "6";
 			}		
 		}
 
