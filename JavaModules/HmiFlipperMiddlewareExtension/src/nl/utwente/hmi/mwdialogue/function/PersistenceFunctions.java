@@ -6,23 +6,49 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.io.PrintWriter;
 import java.io.Serializable;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import com.fasterxml.jackson.core.JsonParseException;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.node.ObjectNode;
+
+import nl.utwente.hmi.middleware.helpers.JSONHelper;
+import nl.utwente.hmi.mwdialogue.ScenarioController;
+import nl.utwente.hmi.mwdialogue.informationstate.helper.RecordHelper;
 import nl.utwente.hmi.mwdialogue.persistence.PersistentRecord;
+import hmi.flipper.defaultInformationstate.DefaultItem;
 import hmi.flipper.defaultInformationstate.DefaultRecord;
 import hmi.flipper.informationstate.Item;
 import hmi.flipper.informationstate.Record;
 
+//TODO: could extend this to save full history in json file, only retrieving newest timestamp, or preferred timestamp/version
 public class PersistenceFunctions {
-	
+    private static Logger logger = LoggerFactory.getLogger(PersistenceFunctions.class.getName());
+
+    private static final String DATA_DIR = "storage/";
+    private static final String DATA_EXTENSION = ".json";
+    
 	private Record is;
+	private RecordHelper rh;
+	private ObjectMapper om;
 
 	public PersistenceFunctions(Record is){
 		this.is = is;
+		om = new ObjectMapper();
+		rh = new RecordHelper();
 	}
 
 	/**
-	 * Store a certain subsection of the IS for future use.
+	 * Store a certain subsection of the IS for future use, as a string JSON representation.
 	 * Duplicate IDs will be overwritten
 	 * 
 	 * @param params This function expects 2 String arguments: first an ID, used to retrieve this data and secondly a path (WITHOUT THE $-SIGN) to store
@@ -35,19 +61,32 @@ public class PersistenceFunctions {
 			
 			try {
 				if(is.getTypeOfPath(path) == Item.Type.Record){
-					Record r = is.getRecord(path);
-					PersistentRecord pr = new PersistentRecord(path, r);
+					//retrieve the record/item we want to store
+					Item i = new DefaultItem(is.getRecord(path));
 					
-					FileOutputStream f_out = new FileOutputStream("storage/"+id+".data");
-					ObjectOutputStream obj_out = new ObjectOutputStream (f_out);
-	
-					System.out.println(id);
-					System.out.println(path);
-					System.out.println(r.toString());
+					//convert it to JSON
+					JsonNode jsonRec = rh.convertISToJSON(i);
 					
-					obj_out.writeObject ( pr );
+					//select where we want to store it
+					FileOutputStream f_out = new FileOutputStream(DATA_DIR+id+DATA_EXTENSION);
+					PrintWriter pw = new PrintWriter(f_out);
+
+					//add some metadata so we can restore it to the same location
+					ObjectNode store = om.createObjectNode();
+					store.put("path", path);
+					store.put("timestamp", System.currentTimeMillis());
+					store.put("id", id);
+					store.set("content", jsonRec);
 					
+					//now save it :)
+					logger.info("Storing record [{}] at [{}]: {}", new String[]{id, path, store.toString()});
+					pw.print(store.toString());
+					pw.flush();
+					
+					pw.close();
 					f_out.close();
+				} else {
+					logger.warn("Unable to store data {}, only support data of type record", path);
 				}
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
@@ -65,41 +104,50 @@ public class PersistenceFunctions {
 
 			String[] p = (String[])params;
 			String id = p[0];
+
+			String fileName = DATA_DIR+id+DATA_EXTENSION;
 			
 			try {
-				String fileName = "storage/"+id+".data";
-						
+				
+				logger.info("Loading data from file {}", fileName);
 				File f = new File(fileName);
 				
 				//does it exist?
 				if(!f.isFile()){
-					//this means that we didnt find this record, unfortunately
+					logger.warn("File doesn't exist: {}", fileName);
 					DefaultRecord r = new DefaultRecord();
 					r.set("loadedsuccess","FALSE");
 					is.set("$persistence", r);
 				} else {
-					FileInputStream f_in = new FileInputStream(f);
-					ObjectInputStream obj_in = new ObjectInputStream (f_in);
-			
-					Object obj = obj_in.readObject();
-		
-					if (obj instanceof PersistentRecord)
-					{
-						PersistentRecord pr = (PersistentRecord) obj;
-						is.set(pr.getPath(), pr.getRec());
-	
+					//load data from file and convert to JSON
+					String data = new String(Files.readAllBytes(Paths.get(f.getPath())));
+					JsonNode jn = om.readTree(data);
+					
+					//check if the data holds what we need
+					if(jn.path("path").isTextual() && jn.path("content").isObject()){
+						String path = jn.get("path").asText();
+						logger.info("Restoring data to IS: {}", path);
+						
+						//convert JSON to record
+						Item item = rh.convertJSONToIS(jn.get("content"));
+						
+						//now restore the data back to the IS
+						is.set(path, item);
+						
+						//let any waiting templates know the loading was succesful
 						DefaultRecord r = new DefaultRecord();
 						r.set("loadedsuccess","TRUE");
 						is.set("$persistence", r);
+					} else {
+						logger.warn("Data {} missing 'path' and/or 'content': {}", fileName, data);
+						DefaultRecord r = new DefaultRecord();
+						r.set("loadedsuccess","FALSE");
+						is.set("$persistence", r);
 					}
-	
-					f_in.close();
 				}
-			} catch (ClassNotFoundException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			} catch (IOException e) {
+			} catch (Exception e) {
 				//this means that we didnt find this record, unfortunately
+				logger.warn("Something went wrong while loading data: {}", fileName);
 				DefaultRecord r = new DefaultRecord();
 				r.set("loadedsuccess","FALSE");
 				is.set("$persistence", r);
