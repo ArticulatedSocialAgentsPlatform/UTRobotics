@@ -147,6 +147,14 @@ public class ZenoRobotControllerMechioImpl implements ZenoRobotController
 
     }
     
+    /**
+     * Returns whether we are (still) connected to the remote Mechio Robot
+     * @return the status of the connection
+     */
+    public boolean isConnected(){
+    	return myRobot.isConnected();
+    }
+    
 	@Override
 	public void speak(String id, String text)
     {
