@@ -3,6 +3,7 @@ package nl.utwente.hmi.yarp.helper;
 import java.io.IOException;
 import java.io.StringReader;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -314,6 +315,51 @@ public class YARPHelper {
 		
 		//we found nothing :(
 		return null;
+	}
+	
+	/**
+	 * A more elaborate search function, similar to searchKey(). This continues searching recursively (depth-first) through an entire bottle, and returns a List of ALL found bottles with the specified key.
+	 * Bottles are a hierarchical list of nested key-values, where the key (String) is always the first item in the list and the values can be one or multiple String/int/floats etc. The values may also be another nested Bottle.
+	 * So the structure must be similar as follows: [key1] [value1] [value2] [[key2] [value21] [value22]] [value3]
+	 * <br /><br />
+	 * Example input: (testing (nested key with values) (something (nested other key (nested key) with different (possibly deeper) values)) (nested stuff)) (nested toplevel)<br />
+	 * Example output: [nested key with values, nested other key (nested key) with different (possibly deeper) values, nested stuff, nested toplevel]
+	 * @param b the bottle to search for
+	 * @param key the key to search for
+	 * @return a List<Bottle> of all found bottles. List will be empty if no nested bottles are found
+	 */
+	public List<Bottle> searchAllKeys(Bottle b, String key){
+
+		//stores all the bottles we have found
+		ArrayList<Bottle> found = new ArrayList<Bottle>();
+		
+		//if b is empty/non-existant just return empty list
+		if(b == null || b.isNull() || b.size() == 0 || b.get(0).isNull()){
+			return found;
+		}
+		
+		//if this is the bottle we are looking for (hurray!), return the whole bottle containing the key and all values
+		if(b.size() > 0 && b.get(0).isString() && b.get(0).asString().equals(key)){
+			found.add(b);
+			return found;
+		} 
+		
+		//otherwise, try to recurse into the hierarchy to perhaps find the key on a deeper level
+		if(b.size() > 0){
+			int i = 0;
+			
+			//never give up, don't stop till we found it or have exhausted our list
+			while(i < b.size()){
+				if(b.get(i).isList()){
+					//let's go deeper!
+					found.addAll(searchAllKeys(b.get(i).asList(), key));
+				}
+				i++;
+			}
+		}
+		
+		//return all the bottles
+		return found;
 	}
 	
 	
