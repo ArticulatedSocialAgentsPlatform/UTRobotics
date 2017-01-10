@@ -4,6 +4,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import yarp.Bottle;
+import yarp.BufferedPortBottle;
 import yarp.Network;
 import yarp.Port;
 
@@ -22,7 +23,7 @@ public class YARPPortWriter {
 	private String ePortName;
 
 	/** The actual instance of the port on which we send */
-	private Port port;
+	private BufferedPortBottle port;
 
 
 	/**
@@ -50,12 +51,12 @@ public class YARPPortWriter {
 	public boolean init(){
     	
     	//create the internal output port
-    	port = new Port();
+    	port = new BufferedPortBottle();
     	boolean openPortSuccess = port.open(iPortName);
     	if(openPortSuccess){
-    		logger.info("Registering port [{}]... Done", iPortName);
+    		logger.info("Registering buffered ouput port [{}]... Done", iPortName);
     	} else {
-    		logger.error("Registering port [{}]... Failed", iPortName);
+    		logger.error("Registering buffered output port [{}]... Failed", iPortName);
     	}
     	
     	boolean connectingSuccess = true;
@@ -63,9 +64,9 @@ public class YARPPortWriter {
     	if(openPortSuccess && ePortName != null && !"".equals(ePortName)){
     		connectingSuccess = Network.connect(iPortName, ePortName);
     		if(connectingSuccess){
-        		logger.info("Connecting internal port [{}] to external port [{}]....Done", iPortName, ePortName);
+        		logger.info("Connecting internal output port [{}] to external input port [{}]....Done", iPortName, ePortName);
     		} else {
-        		logger.warn("Connecting internal port [{}] to external port [{}]....Failed", iPortName, ePortName);
+        		logger.warn("Connecting internal output port [{}] to external input port [{}]....Failed", iPortName, ePortName);
     		}
     	}
     	
@@ -80,8 +81,21 @@ public class YARPPortWriter {
 	 */
 	public boolean writeBottle(Bottle b){
 		if(port != null){
-			logger.info("Sending bottle on port [{}]: {}",iPortName,b.toString());
-			return port.write(b);
+			logger.debug("Sending bottle on buffered output port [{}]: {}",iPortName,b.toString());
+			
+			//get a buffered bottle from the port
+			Bottle bufferedBottle = port.prepare();
+			
+			//make sure it is empty (sometimes the port can recycle a bottle)
+			bufferedBottle.clear();
+			
+			//add the contents of the bottle we actually want to send
+			bufferedBottle.append(b);
+
+			//tell the port to write the bottle (somehow this should work, by reference to the original object... or something.. in the original implementation they use pointers)
+			//writeStrict tells YARP to never drop a bottle, but instead place them in writing queue
+			port.writeStrict();
+			return true;
 		} else {
 			return false;
 		}

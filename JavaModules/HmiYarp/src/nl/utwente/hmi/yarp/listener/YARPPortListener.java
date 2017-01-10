@@ -6,6 +6,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import yarp.Bottle;
+import yarp.BufferedPortBottle;
 import yarp.Network;
 import yarp.Port;
 import yarp.Value;
@@ -22,8 +23,8 @@ public class YARPPortListener implements Runnable {
 	/** The internal portname on which we listen to bottles */
 	private String iPortName;
 
-	/** The actual instance of the port on which we listen */
-	private Port port;
+	/** The actual instance of the port on which we listen, this implementation buffers the incoming bottles untill we are ready to read them */
+	private BufferedPortBottle port;
 	
 	/** The worker object which will be called as soon as we receive a bottle */
 	private ArrayList<Worker> workers;
@@ -43,23 +44,24 @@ public class YARPPortListener implements Runnable {
 
 	@Override
 	public void run() {
-    	
-    	//create the internal input port
-		
-    	port = new Port();
+    	//create the internal input port, this should buffer the incoming bottles till we can read them
+    	port = new BufferedPortBottle();
     	if(port.open(iPortName)){
-    		logger.info("Registering port [{}]... Done", iPortName);
+    		logger.info("Registering buffered input port [{}]... Done", iPortName);
     	} else {
-    		logger.error("Registering port [{}]... Failed", iPortName);
+    		logger.error("Registering buffered input port [{}]... Failed", iPortName);
     	}
 
 		logger.info("Starting to listen for bottles...");
     	
-		//listen for new bottles, the read() function is blocking until a bottle is received
 		while(true){
-		    Bottle bot = new Bottle();
-		    port.read(bot);
-		    //logger.debug("Got bottle on port [{}]: {}",iPortName,bot.toString());
+			//listen for new bottles, the read() function is blocking until a bottle is received
+			//get a new bottle from the buffer, or wait/block (true) for a new one to arrive
+		    Bottle bot = port.read(true);
+		    
+		    logger.debug("Got bottle on buffered input port [{}]: {}",iPortName,bot.toString());
+		    
+		    //pass the bottle on to all worker threads
 		    for(Worker w : workers){
 		    	w.addBottleToQueue(bot);
 		    }
