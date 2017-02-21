@@ -1,2 +1,0 @@
-This module listens on the serial port for incoming messages from the Arduino. 
-It then generates an appropriate message to be transmitted on a middleware channel, so other modules (Flipper) can use the sensor data.
