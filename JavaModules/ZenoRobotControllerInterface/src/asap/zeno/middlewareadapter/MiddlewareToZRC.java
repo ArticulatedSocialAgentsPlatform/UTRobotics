@@ -46,60 +46,60 @@ public class MiddlewareToZRC implements MiddlewareListener, ZenoSpeechListener {
 	 */
 	@Override
 	public void receiveData(JsonNode jn) {
-		JsonNode request = jn.get("request");
-		String action = request.get("action").asText();
-		JsonNode params = request.get("params");
+		JsonNode request = jn.path("request");
+		String action = request.path("action").asText();
+		JsonNode params = request.path("params");
 		if(action.equals("lookAt")){
-			double x= params.get("x").asDouble();
-			double y= params.get("y").asDouble();
-			long duration = params.get("duration").asInt();
+			double x= params.path("x").asDouble();
+			double y= params.path("y").asDouble();
+			long duration = params.path("duration").asInt();
 			physicalRobot.lookAt(x, y, duration);
 		} else if(action.equals("moveJointsById")){
 			Map<Integer, Double> positions = new HashMap<>();
 
-			JsonNode ps = params.get("positions");
+			JsonNode ps = params.path("positions");
 			Iterator<Entry<String,JsonNode>> it = ps.fields();
 			while(it.hasNext())
 			{
 				Entry<String, JsonNode> e = it.next();
 				JsonNode position = e.getValue();
-				positions.put(position.get("id").asInt(), position.get("amount").asDouble());
+				positions.put(position.path("id").asInt(), position.path("amount").asDouble());
 			}
-			long duration = params.get("duration").asInt();
+			long duration = params.path("duration").asInt();
 			
 			physicalRobot.moveJointsById(positions, duration);
 		} else if(action.equals("moveJointsByName")){
 			Map<String, Double> positions = new HashMap<>();
 
-			JsonNode ps = params.get("positions");
+			JsonNode ps = params.path("positions");
 			Iterator<Entry<String,JsonNode>> it = ps.fields();
 			while(it.hasNext())
 			{
 				Entry<String, JsonNode> e = it.next();
 				JsonNode position = e.getValue();
-				positions.put(position.get("name").asText(), position.get("amount").asDouble());
+				positions.put(position.path("name").asText(), position.path("amount").asDouble());
 			}
-			long duration = params.get("duration").asInt();
+			long duration = params.path("duration").asInt();
 			
 			physicalRobot.moveJointsByName(positions, duration);
 		} else if(action.equals("moveJointsByTDCName")){
 			Map<String, Double> positions = new HashMap<>();
 
-			JsonNode ps = params.get("positions");
+			JsonNode ps = params.path("positions");
 			Iterator<Entry<String,JsonNode>> it = ps.fields();
 			while(it.hasNext())
 			{
 				Entry<String, JsonNode> e = it.next();
 				JsonNode position = e.getValue();
-				positions.put(position.get("name").asText(), position.get("amount").asDouble());
+				positions.put(position.path("name").asText(), position.path("amount").asDouble());
 			}
-			long duration = params.get("duration").asInt();
+			long duration = params.path("duration").asInt();
 			
 			physicalRobot.moveJointsByTDCName(positions, duration);
 		} else if(action.equals("speak")){
-			physicalRobot.speak(params.get("id").asText(), params.get("text").asText());
+			physicalRobot.speak(params.path("id").asText(), params.path("text").asText());
 		} else if(action.equals("getAnimationDurationByName")){
-			double dur = physicalRobot.getAnimationDurationByName(params.get("name").asText());
+			double dur = physicalRobot.getAnimationDurationByName(params.path("name").asText());
 			JsonNode jndur = object("feedback",
 				       object()
 						 .with("type","animDuration")
@@ -107,7 +107,7 @@ public class MiddlewareToZRC implements MiddlewareListener, ZenoSpeechListener {
 	         ).end();
 			middleware.sendData(jndur);
 		} else if(action.equals("playAnimationByName")){
-			double dur = physicalRobot.playAnimationByName(params.get("name").asText());
+			double dur = physicalRobot.playAnimationByName(params.path("name").asText());
 			JsonNode jndur = object("feedback",
 				       object()
 						 .with("type","animDuration")
@@ -115,7 +115,7 @@ public class MiddlewareToZRC implements MiddlewareListener, ZenoSpeechListener {
 	         ).end();
 			middleware.sendData(jndur);
 		} else if(action.equals("playAnimationByFileName")){
-			double dur = physicalRobot.playAnimationByFileName(params.get("fileName").asText());
+			double dur = physicalRobot.playAnimationByFileName(params.path("fileName").asText());
 			JsonNode jndur = object("feedback",
 				       object()
 						 .with("type","animDuration")
@@ -123,7 +123,7 @@ public class MiddlewareToZRC implements MiddlewareListener, ZenoSpeechListener {
 	         ).end();
 			middleware.sendData(jndur);
 		} else if(action.equals("playAnimationByContent")){
-			double dur = physicalRobot.playAnimationByFileName(params.get("xmlContent").asText());
+			double dur = physicalRobot.playAnimationByFileName(params.path("xmlContent").asText());
 			JsonNode jndur = object("feedback",
 				       object()
 						 .with("type","animDuration")
