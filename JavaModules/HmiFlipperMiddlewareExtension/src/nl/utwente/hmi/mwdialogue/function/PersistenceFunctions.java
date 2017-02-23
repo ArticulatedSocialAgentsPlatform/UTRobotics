@@ -31,7 +31,7 @@ import hmi.flipper.informationstate.Item;
 import hmi.flipper.informationstate.Record;
 
 //TODO: could extend this to save full history in json file, only retrieving newest timestamp, or preferred timestamp/version
-public class PersistenceFunctions {
+public class PersistenceFunctions implements FunctionClass {
     private static Logger logger = LoggerFactory.getLogger(PersistenceFunctions.class.getName());
 
     private static final String DATA_DIR = "storage/";

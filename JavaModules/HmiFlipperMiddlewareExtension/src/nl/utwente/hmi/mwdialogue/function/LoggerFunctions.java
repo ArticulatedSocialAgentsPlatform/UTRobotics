@@ -7,7 +7,7 @@ import nl.utwente.hmi.mwdialogue.ScenarioController;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class LoggerFunctions {
+public class LoggerFunctions implements FunctionClass {
     private static Logger logger = LoggerFactory.getLogger("FlipperLogger");
 
 	

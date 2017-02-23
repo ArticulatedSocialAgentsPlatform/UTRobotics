@@ -77,12 +77,13 @@ public class ScenarioConfigLoader {
 	 * First loads all the properties and settings from the various config files
 	 * Then creates and inits the ScenarioController
 	 */
-	public void loadScenario(){
+	public ScenarioController loadScenario(){
 		loadProperties();
 		loadDatasources();
 		loadDatatargets();
 		sc = new ScenarioController(datasources, datatargets, templateFileNames);
 		sc.initScenario();
+		return sc;
 	}
 	
 	/**

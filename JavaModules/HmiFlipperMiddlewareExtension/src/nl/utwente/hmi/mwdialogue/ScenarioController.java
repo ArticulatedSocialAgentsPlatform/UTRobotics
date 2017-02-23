@@ -28,9 +28,9 @@ import nl.utwente.hmi.communication.Datatarget;
 import nl.utwente.hmi.middleware.Middleware;
 import nl.utwente.hmi.middleware.loader.GenericMiddlewareLoader;
 import nl.utwente.hmi.mwbehaviour.BMLTemplateBehaviour;
+import nl.utwente.hmi.mwdialogue.function.FunctionClass;
 import nl.utwente.hmi.mwdialogue.function.LoggerFunctions;
 import nl.utwente.hmi.mwdialogue.function.PersistenceFunctions;
-import nl.utwente.hmi.mwdialogue.function.TaskGenerationFunctions;
 import nl.utwente.hmi.mwdialogue.informationstate.ObservableInformationState;
 import nl.utwente.hmi.mwdialogue.informationstate.Observer;
 import nl.utwente.hmi.mwdialogue.informationstate.helper.RecordHelper;
@@ -144,9 +144,8 @@ public class ScenarioController implements Observer, Runnable, ClockListener, BM
 		
 		//add the collection of functions that we can use in Effects
 		//TODO: DISCUSS we should probably load this automatically using reflection.. for instance everything under nl.utwente.hmi.mwdialogue.function
-		tc.addFunction(new LoggerFunctions());
-		tc.addFunction(new PersistenceFunctions(is));
-		tc.addFunction(new TaskGenerationFunctions(is));
+		this.registerFunctionClass(new LoggerFunctions());
+		this.registerFunctionClass(new PersistenceFunctions(is));
 	}
 
 	/**
@@ -220,6 +219,8 @@ public class ScenarioController implements Observer, Runnable, ClockListener, BM
 		}
 	}
 	
+	
+	
 	/**
 	 * Takes a string in the form "key1:val1,key2:val2" and transforms it into Properties with the specified key and vals..
 	 * This can be used to parse properties for Middleware loaders
@@ -240,7 +241,22 @@ public class ScenarioController implements Observer, Runnable, ClockListener, BM
 		
 		return returnProperties;
 	}
+		
+	/**
+	 * Returns the most current top-level information state being used in this dialogue
+	 * @return the information state
+	 */
+	public Record getInformationState(){
+		return is;
+	}
 	
+	/**
+	 * Register all methods of a given FunctionClass to the TemplateController so they can be called from within an Effect
+	 * @param fc the class containing the functions
+	 */
+	public void registerFunctionClass(FunctionClass fc){
+		tc.addFunction(fc);
+	}
 
 	@Override
 	public void hasChanged(Record record) {
