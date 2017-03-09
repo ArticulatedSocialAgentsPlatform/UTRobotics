@@ -9,22 +9,23 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Enumeration;
 import java.util.List;
+import java.util.Set;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import gnu.io.CommPortIdentifier;
+import gnu.io.NRSerialPort;
 import gnu.io.SerialPort;
 import gnu.io.SerialPortEvent;
 import gnu.io.SerialPortEventListener;
+
 
 
 /**
  * This basic class wraps a USB (or actually, a serial) connection, providing a convenient way to send and receive strings from a connected USB devide, such as an Arduino
  * Implementing classes must override the processData(String) function, which is called each time new data arrives from the serial port.
  * 
- * TODO: currently only works on Windows machines!!! possibly move to a different RXTX fork for better compatibilty with other operating systems: https://github.com/NeuronRobotics/nrjavaserial
- *
  * @author davisond
  *
  */
@@ -50,18 +51,19 @@ public abstract class USBWrapper implements SerialPortEventListener {
 	private static final int TIME_OUT = 2000;
 	private static final int DATA_RATE = 9600;
 
-	private SerialPort serialPort;
-
 	private BufferedReader input;
 
 	private BufferedWriter output;
+
+	private SerialPort serialPort;
 
 	public USBWrapper(String[] comPorts){
 		init(comPorts);
 	}
 	
 	private void init(String[] comPorts){
-		logger.debug("Searching for COM ports: {}", Arrays.toString(comPorts));
+		Set<String> availablePorts = NRSerialPort.getAvailableSerialPorts();
+		logger.debug("Searching for COM ports {} in available set of ports {}", Arrays.toString(comPorts), Arrays.toString(availablePorts.toArray()));
 		
 		// Setting up serial connection
 		CommPortIdentifier portId = null;
@@ -81,7 +83,7 @@ public abstract class USBWrapper implements SerialPortEventListener {
 		
 		//did we succeed in getting the correct COM?
 		if (portId == null) {
-			logger.error("Could not find COM port: [{}].", Arrays.toString(comPorts));
+			logger.error("Could not find COM port {} in available set of ports {}", Arrays.toString(comPorts), Arrays.toString(availablePorts.toArray()));
 			System.exit(-1);
 		}
 
