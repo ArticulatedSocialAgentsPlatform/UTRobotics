@@ -55,15 +55,15 @@ public abstract class USBWrapper implements SerialPortEventListener {
 
 	private BufferedWriter output;
 
-	private SerialPort serialPort;
+	protected SerialPort serialPort;
 
 	public USBWrapper(String[] comPorts){
 		init(comPorts);
 	}
 	
 	private void init(String[] comPorts){
-		Set<String> availablePorts = NRSerialPort.getAvailableSerialPorts();
-		logger.debug("Searching for COM ports {} in available set of ports {}", Arrays.toString(comPorts), Arrays.toString(availablePorts.toArray()));
+		//Set<String> availablePorts = NRSerialPort.getAvailableSerialPorts();
+		//logger.debug("Searching for COM ports {} in available set of ports {}", Arrays.toString(comPorts), Arrays.toString(availablePorts.toArray()));
 		
 		// Setting up serial connection
 		CommPortIdentifier portId = null;
@@ -83,7 +83,7 @@ public abstract class USBWrapper implements SerialPortEventListener {
 		
 		//did we succeed in getting the correct COM?
 		if (portId == null) {
-			logger.error("Could not find COM port {} in available set of ports {}", Arrays.toString(comPorts), Arrays.toString(availablePorts.toArray()));
+			//logger.error("Could not find COM port {} in available set of ports {}", Arrays.toString(comPorts), Arrays.toString(availablePorts.toArray()));
 			System.exit(-1);
 		}
 
