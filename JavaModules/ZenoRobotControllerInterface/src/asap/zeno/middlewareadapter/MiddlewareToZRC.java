@@ -131,6 +131,8 @@ public class MiddlewareToZRC implements MiddlewareListener, ZenoSpeechListener {
 	         ).end();
 			middleware.sendData(jndur);
 			
+		} else if(action.equals("stopAnimation")) {
+			physicalRobot.stopAnimation();
 		}
 	}
 

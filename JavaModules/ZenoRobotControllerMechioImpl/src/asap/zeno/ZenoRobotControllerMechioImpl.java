@@ -44,6 +44,8 @@ import org.mechio.client.basic.UserSettings;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.sun.media.jfxmedia.events.PlayerStateEvent.PlayerState;
+
 import asap.zeno.api.ZenoRobotController;
 import asap.zeno.api.ZenoSpeechListener;
 import hmi.util.Resources;
@@ -281,6 +283,15 @@ public class ZenoRobotControllerMechioImpl implements ZenoRobotController
 		}
 		return 0.0d;
     }
+	
+	@Override
+	public void stopAnimation() {
+		logger.debug("Stopping currently running animation job");
+		if(currentAnimationJob != null) {
+			currentAnimationJob.pause(0);
+			currentAnimationJob.stop(0);
+		}
+	}
 	
     public AnimationJob moveRobot(RobotPositionMap positions, long durationMsec){
         RobotPositionMap curPositons = myRobot.getCurrentPositions();

@@ -180,6 +180,17 @@ public class ZRCToMiddleware implements ZenoRobotController, MiddlewareListener 
 	}
 	
 	@Override
+	public void stopAnimation() {
+		JsonNode jn = object("request",
+				       object()
+						 .with("action","stopAnimation")
+					).end();
+
+		logger.debug("sending data: {}",jn.toString());
+		middleware.sendData(jn);
+	}
+	
+	@Override
 	public void moveJointsById(Map<Integer, Double> positions, long duration)
 	{
 		ObjectNode ps = om.createObjectNode();

@@ -120,8 +120,10 @@ public class AnimationZU extends ZenoUnit
     /** start the unit. */
     public void startUnit(double time) throws ZUPlayException
     {
-    	double dur = sze.playAnimationByName(animation);
-    	logger.debug("expected duration of animation: {}. Check whether this equals the planned duration! ",dur);
+    	if(!"".equals(animation) && animation != null && !"null".equals(animation)) {
+	    	double dur = sze.playAnimationByName(animation);
+	    	logger.debug("expected duration of animation: {}. Check whether this equals the planned duration! ",dur);
+    	}
     	
     }
 
@@ -212,21 +214,26 @@ public class AnimationZU extends ZenoUnit
     @Override
     public double getPreferredDuration()
     {
-		if (cachedExpectedDuration >= 0)
-		{
-			return cachedExpectedDuration;
-		}
-        if (animation!= null && !animation.equals("")) 
-        {
-        	cachedExpectedDuration=sze.getAnimationDurationByName(animation);
-        	logger.debug("Planning: Animation {} has duration {}",animation,cachedExpectedDuration );
-        	return cachedExpectedDuration ;
-        }
-        else 
-        {
-        	logger.warn("can't give expectd duration while animation is empty or null: \"{}\"",animation);
-        }
-		return 0;
+    	return 10.0f;
+    	//sorry, I had to remove this duration estimation.... 
+    	//it works by requesting the Zeno to perform the animation, then very quickly pausing it, in order to retrieve the duration.
+    	//however, this means that the zeno already (briefly) starts moving a bit as soon as this method ic invoked, which we absolutely do not want in DE-ENIGMA!
+    	//better to look for a different method of duration estimation.
+//		if (cachedExpectedDuration >= 0)
+//		{
+//			return cachedExpectedDuration;
+//		}
+//        if (animation!= null && !animation.equals("")) 
+//        {
+//        	cachedExpectedDuration=sze.getAnimationDurationByName(animation);
+//        	logger.debug("Planning: Animation {} has duration {}",animation,cachedExpectedDuration );
+//        	return cachedExpectedDuration ;
+//        }
+//        else 
+//        {
+//        	logger.warn("can't give expectd duration while animation is empty or null: \"{}\"",animation);
+//        }
+//		return 0;
 	}
 
     public double getRigidity()

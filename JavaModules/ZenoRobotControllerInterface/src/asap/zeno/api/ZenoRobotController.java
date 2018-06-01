@@ -39,6 +39,9 @@ public interface ZenoRobotController
 	/** Returns expected duration in millis. Directly send the XML of the animation */
 	double playAnimationByContent(String xmlContent);
 	
+	/** Stops any currently running animation */
+	void stopAnimation();
+	
 	/**
 	 * Moves a set of joints to the indicated positions over a specified duration.
 	 * Double values will be normalized by robot before running the command.

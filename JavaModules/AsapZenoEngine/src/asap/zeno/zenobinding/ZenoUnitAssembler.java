@@ -28,6 +28,7 @@ import asap.zeno.planunit.DummySpeakZU;
 import asap.zeno.planunit.LookAtZU;
 import asap.zeno.planunit.PoseZU;
 import asap.zeno.planunit.SpeakZU;
+import asap.zeno.planunit.StopAnimationZU;
 import asap.zeno.planunit.ZenoUnit;
 import hmi.xml.XMLStructureAdapter;
 import hmi.xml.XMLTokenizer;
@@ -62,6 +63,10 @@ public class ZenoUnitAssembler extends XMLStructureAdapter
         else if (type.equals("AnimationZU"))
         {
             zenoUnit = new AnimationZU();
+        }
+        else if (type.equals("StopAnimationZU"))
+        {
+            zenoUnit = new StopAnimationZU();
         }
         else if (type.equals("PoseZU"))
         {

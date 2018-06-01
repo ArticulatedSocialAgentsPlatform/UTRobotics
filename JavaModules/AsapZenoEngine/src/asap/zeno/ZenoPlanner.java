@@ -39,6 +39,7 @@ import asap.zeno.bml.DummySpeakBehavior;
 import asap.zeno.bml.ExpressionBehavior;
 import asap.zeno.bml.LookAtBehavior;
 import asap.zeno.bml.SpeakBehavior;
+import asap.zeno.bml.StopAnimationBehavior;
 import asap.zeno.planunit.TimedZenoUnit;
 import asap.zeno.zenobinding.ZenoBinding;
 import hmi.tts.Bookmark;
@@ -62,6 +63,7 @@ public class ZenoPlanner extends AbstractPlanner<TimedZenoUnit>
         BMLInfo.addBehaviourType(SpeakBehavior.xmlTag(), SpeakBehavior.class);
         BMLInfo.addBehaviourType(DummySpeakBehavior.xmlTag(), DummySpeakBehavior.class);
         BMLInfo.addBehaviourType(AnimationBehavior.xmlTag(), AnimationBehavior.class);
+        BMLInfo.addBehaviourType(StopAnimationBehavior.xmlTag(), StopAnimationBehavior.class);
     }
 
     @SuppressWarnings("unused")
@@ -282,6 +284,7 @@ public class ZenoPlanner extends AbstractPlanner<TimedZenoUnit>
         list.add(SpeakBehavior.class);
         list.add(DummySpeakBehavior.class);
         list.add(AnimationBehavior.class);
+        list.add(StopAnimationBehavior.class);
         return list;
     }
 
