@@ -107,6 +107,8 @@ public class ScenarioController implements Observer, Runnable, ClockListener, BM
 		new Thread(this).start();
 		//..and start (clock time to IS)
 		SystemClock clock = new SystemClock(1000 , "is_clock");  
+		//start the time at a small random non-zero start time
+		clock.setMediaSeconds(Math.random());
 		clock.start();
 		clock.addClockListener(this);
 	}
