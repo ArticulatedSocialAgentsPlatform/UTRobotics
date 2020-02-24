@@ -44,8 +44,6 @@ import org.mechio.client.basic.UserSettings;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.sun.media.jfxmedia.events.PlayerStateEvent.PlayerState;
-
 import asap.zeno.api.ZenoRobotController;
 import asap.zeno.api.ZenoSpeechListener;
 import hmi.util.Resources;
