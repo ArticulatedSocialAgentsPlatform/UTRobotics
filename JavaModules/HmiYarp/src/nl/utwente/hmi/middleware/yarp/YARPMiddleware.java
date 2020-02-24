@@ -74,6 +74,11 @@ public class YARPMiddleware extends AbstractWorker implements Middleware {
 			portWriter.writeBottle(b);
 		}
 	}
+	
+	@Override
+	public void sendDataRaw(String str){
+		portWriter.writeBottle(new Bottle(str));
+	}
 
 	@Override
 	protected void processBottle(Bottle b) {
